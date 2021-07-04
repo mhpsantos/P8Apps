@@ -320,5 +320,17 @@
     "storage": [
       {"name":"widtexttop.wid.js","url":"widtexttop.wid.js"}
     ]
+  },
+  { "id": "timer",
+	  "name": "My Timer App",
+	  "shortName":"My Timer",
+	  "icon": "app.png",
+	  "version":"0.01",
+	  "description": "Timer test app.",
+	  "tags": "",
+	  "storage": [
+	    {"name":"timer.app.js","url":"app.js"},
+	    {"name":"timer.img","url":"app-icon.js","evaluate":true}
+  	]
   }
 ]
