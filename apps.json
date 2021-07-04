@@ -322,15 +322,15 @@
     ]
   },
   { "id": "test",
-	  "name": "#1 Test app",
-	  "shortName":"Test App",
-	  "icon": "test.png",
-	  "version":"0.01",
-	  "description": "Test app.",
-	  "tags": "",
-	  "storage": [
-	    {"name":"app.js","url":"app.js"},
-	    {"name":"test.img","url":"app-icon.js","evaluate":true}
-  	]
+  "name": "#1 Test App",
+  "shortName":"Tester",
+  "icon": "testapp.png",
+  "version":"0.01",
+  "description": "This is an app for tests.",
+  "tags": "",
+  "storage": [
+    {"name":"test.app.js","url":"app.js"},
+    {"name":"test.img","url":"app-icon.js","evaluate":true}
+  ]
   }
 ]
