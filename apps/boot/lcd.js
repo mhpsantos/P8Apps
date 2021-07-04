@@ -75,6 +75,7 @@ function ST7789() {
         });
         g.lcd_sleep = function(){cmd(0x10);cmd(0x28);};
         g.lcd_wake = function(){cmd(0x29);cmd(0x11);};
+	g.setFontAlign(0,0);
         dispinit(rst, ()=>{g.clear().setFont("Vector",24).drawString("P8 Espruino", g.getWidth()/2, g.getHeight()/2);});
         return g;
     }
