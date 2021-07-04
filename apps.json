@@ -329,8 +329,8 @@
 	  "description": "Test app.",
 	  "tags": "",
 	  "storage": [
-	    {"name":"timer.app.js","url":"app.js"},
-	    {"name":"timer.img","url":"app-icon.js","evaluate":true}
+	    {"name":"testApp.app.js","url":"app.js"},
+	    {"name":"testApp.img","url":"app-icon.js","evaluate":true}
   	]
   }
 ]
