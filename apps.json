@@ -321,16 +321,16 @@
       {"name":"widtexttop.wid.js","url":"widtexttop.wid.js"}
     ]
   },
-  { "id": "timer",
+  { "id": "test",
 	  "name": "#1",
 	  "shortName":"Test App",
-	  "icon": "app.png",
+	  "icon": "test.png",
 	  "version":"0.01",
 	  "description": "Test app.",
 	  "tags": "",
 	  "storage": [
-	    {"name":"testApp.app.js","url":"app.js"},
-	    {"name":"testApp.img","url":"app-icon.js","evaluate":true}
+	    {"name":"test.app.js","url":"app.js"},
+	    {"name":"test.img","url":"app-icon.js","evaluate":true}
   	]
   }
 ]
