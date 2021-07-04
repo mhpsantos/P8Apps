@@ -1,5 +1,10 @@
-g.setFontAlign(0,0);
+(() => {
+  g.setFontAlign(0,0);
 
-g.setFont("Vector",100);
+  g.setFont("Vector",100);
 
-g.drawString("19:00");
+  g.drawString("1900");
+
+  
+  
+})();
