@@ -322,14 +322,14 @@
     ]
   },
   { "id": "test",
-	  "name": "#1",
+	  "name": "#1 Test app",
 	  "shortName":"Test App",
 	  "icon": "test.png",
 	  "version":"0.01",
 	  "description": "Test app.",
 	  "tags": "",
 	  "storage": [
-	    {"name":"test.app.js","url":"app.js"},
+	    {"name":"app.js","url":"app.js"},
 	    {"name":"test.img","url":"app-icon.js","evaluate":true}
   	]
   }
