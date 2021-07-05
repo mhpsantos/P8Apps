@@ -6,6 +6,8 @@ function draw() {
   // Reset the state of the graphics library
   g.reset();
   // draw the current time
+  g.clearRect(0,0,240,240);
+  g.setFontAlign(0,0);
   g.setFont("Vector",50);
   g.drawString(time, 50, 50, true);
 }
