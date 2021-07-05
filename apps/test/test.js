@@ -1,13 +1,7 @@
-var counter = 30;
+g.clear(true);
 
-function countDown() {
-  counter--;
+g.setFontAlign(0,0);
+g.setFont("Vector",50);
+g.drawString("TESTE");
 
-  g.clear();
-  // draw the current counter value
-  g.drawString(counter, g.getWidth()/2, g.getHeight()/2);
-  // optional - this keeps the watch LCD lit up
-  g.flip();
-}
-
-var interval = setInterval(countDown, 1000);
+g.flip();
