@@ -8,7 +8,7 @@ function drawtext() {
   // draw the current counter value
   g.setFont("Vector", 50);
   g.setFontAlign(0,0);
-  g.drawString(variable, 0, 0);
+  g.drawString(variable);
   // optional - this keeps the watch LCD lit up
   g.flip();
 }
