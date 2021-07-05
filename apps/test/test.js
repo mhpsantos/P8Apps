@@ -1,13 +1,13 @@
-var counter = "teste";
+var variable = "teste";
 
-function drawText() {
+function drawtext() {
 
 
   g.clear();
   // draw the current counter value
-  g.drawString(counter, g.getWidth()/2, g.getHeight()/2);
+  g.drawString(variable, g.getWidth()/2, g.getHeight()/2);
   // optional - this keeps the watch LCD lit up
   g.flip();
 }
 
-var interval = setInterval(drawText, 60000);
+var interval = setInterval(drawtext, 60000);
