@@ -1,6 +1,6 @@
 var counter = "teste";
 
-function countDown() {
+function drawText() {
 
 
   g.clear();
@@ -9,3 +9,5 @@ function countDown() {
   // optional - this keeps the watch LCD lit up
   g.flip();
 }
+
+drawText();
