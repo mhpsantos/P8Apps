@@ -5,26 +5,27 @@ const colN = 7;
 const headerH = maxY / 7;
 const rowH = (maxY - headerH) / rowN;
 const colW = maxX / colN;
-const color1 = "#035AA6";
-const color2 = "#4192D9";
-const color3 = "#026873";
-const color4 = "#038C8C";
+const headerColor = "#2962ff";
+const daysColor = "#ffffff";
+const weekendColor = "#e3f2fd";
+const weekdaysColor = "#ffffff";
 const color5 = "#03A696";
 const black = "#000000";
 const white = "#ffffff";
 const gray1 = "#444444";
 const gray2 = "#888888";
 const gray3 = "#bbbbbb";
-const red = "#d41706";
+const red = "#ff0000";
+const blue = "#2962ff";
 
 function drawCalendar(date) {
-  g.setBgColor(color4);
+  g.setBgColor(weekdaysColor);
   g.clearRect(0, 0, maxX, maxY);
-  g.setBgColor(color1);
+  g.setBgColor(headerColor);
   g.clearRect(0, 0, maxX, headerH);
-  g.setBgColor(color2);
+  g.setBgColor(daysColor);
   g.clearRect(0, headerH, maxX, headerH + rowH);
-  g.setBgColor(color3);
+  g.setBgColor(weekendColor);
   g.clearRect(colW * 5, headerH + rowH, maxX, maxY);
   for (let y = headerH; y < maxY; y += rowH) {
     g.drawLine(0, y, maxX, y);
@@ -51,7 +52,7 @@ function drawCalendar(date) {
   };
   g.setFontAlign(0, 0);
   g.setFont("6x8", 2);
-  g.setColor(white);
+  g.setColor(black);//header and week text color
   g.drawString(`${monthMap[month]} ${year}`, maxX / 2, headerH / 2);
   g.drawPoly([10, headerH / 2, 20, 10, 20, headerH - 10], true);
   g.drawPoly(
@@ -109,7 +110,7 @@ function drawCalendar(date) {
       const isToday =
         today.year === year && today.month === month && today.day === day - 50;
       if (isToday) {
-        g.setColor(red);
+        g.setColor(blue);
         g.drawRect(
           x * colW,
           y * rowH + headerH + rowH,
@@ -117,7 +118,7 @@ function drawCalendar(date) {
           y * rowH + headerH + rowH + rowH
         );
       }
-      g.setColor(day < 50 ? gray3 : white);
+      g.setColor(day < 50 ? gray3 : black);
       g.drawString(
         (day > 50 ? day - 50 : day).toString(),
         x * colW + colW / 2,
