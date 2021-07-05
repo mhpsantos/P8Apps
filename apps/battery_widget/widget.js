@@ -15,14 +15,14 @@
       // add your code
     var batLevel = E.getBattery(); 
      if(batLevel >= 75){
-     g.drawImage(fullBat,210,0); 
+     g.drawImage(fullBat,210,0,{scale:2}); 
     }else if(batLevel >= 10){
-      g.drawImage(halfBat,210,0);
+      g.drawImage(halfBat,210,0,{scale:2});
     }else{
-      g.drawImage(emptyBat,210,0);
+      g.drawImage(emptyBat,210,0,{scale:2});
     }
     if(P8.isPower()){
-      g.drawImage(chargingBat, 210, 0);
+      g.drawImage(chargingBat, 210, 0,{scale:2});
     }
   }
 
