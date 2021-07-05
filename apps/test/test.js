@@ -1,20 +1,17 @@
 var variable = "clear";
 
 
-function drawtext() {
+function draw() {
 
   
   g.clear();
-  // draw the current counter value
+  g.fillRect(0, 0, 239, 20); 
   g.setFont("Vector", 50);
   g.setFontAlign(0,0);
   g.drawString(variable);
-  // optional - this keeps the watch LCD lit up
   g.flip();
 }
 
 g.clear();
 
-drawtext();
-
-var interval = setInterval(drawtext, 1000);
+setTimeout(()=>{draw();},500);
