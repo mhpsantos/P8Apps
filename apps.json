@@ -322,15 +322,14 @@
     ]
   },
   { "id": "test",
-  "name": "#1 Test App",
-  "shortName":"Tester",
-  "icon": "testapp.png",
-  "version":"0.01",
-  "description": "This is an app for tests.",
-  "tags": "",
-  "storage": [
-    {"name":"test.app.js","url":"app.js"},
-    {"name":"test.img","url":"app-icon.js","evaluate":true}
-  ]
+    "name": "Test App",
+    "icon": "test.png",
+    "version":"0.01",
+    "description": "Test App",
+    "readme": "README.md",
+    "storage": [
+      {"name":"test.app.js","url":"test.js"},
+      {"name":"test.img","url":"app-icon.js","evaluate":true}
+    ]
   }
 ]
