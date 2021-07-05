@@ -1,5 +1,5 @@
 (() => {
-  var chargingBat = require("heatshrink").decompress(atob("iEQ4MA/4ACBw3Avu4weE2+E1/n1/H0eUwcEu14ggYGA="));
+  var chargingBat = require("heatshrink").decompress(atob("sFg4MA/4ACI/4A/ACsPBZUfBa0/BZV+Ba3+BasBBa0DBZUH/gLVh4LWj4LWn4LKv/4Bav/BasBBa0DBZnwUxILKh4LMAAINHj4LWn4LC8ALSv4LC4CaHAAWABaKaBAASmIBZKaBAAP+BaSmBAAP8TRTMHBZ7MXTQ4LPUw7YDUw4LPBRALNTQ4LPUw4ACn6aHBZ6aJBZqaJBZqmJgF/TRILNBRILMvwLWvgLKTRQLMTRQA/AH4ALA"));
   var fullBat = require("heatshrink").decompress(atob("iEQ4MA/4ACB49//GAgm/+m/+4BC+gJBBoIXH"));
   var halfBat = require("heatshrink").decompress(atob("iEQ4MA/4ACB49//GAgm+AIMHAIUEBIINBC44"));
   var emptyBat = require("heatshrink").decompress(atob("iEQ4MA/4ACB49//GAggBCg4BCA4QNBC44A=="));
@@ -22,7 +22,7 @@
       g.drawImage(emptyBat,210,0,{scale:2});
     }
     if(P8.isPower()){
-      g.drawImage(chargingBat, 210, 0,{scale:2});
+      g.drawImage(chargingBat, 180, 0,{scale:0.28});
     }
   }
 
