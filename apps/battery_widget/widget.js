@@ -14,8 +14,8 @@
     g.reset(); // reset the graphics context to defaults (color/font/etc)
       // add your code
     var batLevel = E.getBattery(); 
-    
-     g.drawString(batLevel, 50, 50);
+     g.setFont("Vector",10);
+     g.drawString(batLevel, 20, 20);
   }
 
   // add your widget
