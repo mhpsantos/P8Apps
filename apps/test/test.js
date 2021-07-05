@@ -8,5 +8,4 @@ g.reset();
 // draw the current time
 g.setFontAlign(0,0);
 g.setFont("Vector",50);
-g.drawString(time, 50, 50, true);
-
+g.drawString(time);
