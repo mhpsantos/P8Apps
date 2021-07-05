@@ -339,7 +339,7 @@
     "tags": "widget",
     "type": "widget",
     "storage": [
-      {"name":"widget.js","url":"widget.js"}
+      {"name":"batwid.wid.js","url":"widget.js"}
     ]
   }
 ]
