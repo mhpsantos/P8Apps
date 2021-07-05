@@ -1,4 +1,4 @@
-g.clear();
 g.reset();
+g.clear();
 // work out how to display the current time
-Bangle.Buzz(100, 1);
+Bangle.buzz(100, 1);
