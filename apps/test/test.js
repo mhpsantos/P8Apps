@@ -9,5 +9,3 @@ function countDown() {
   // optional - this keeps the watch LCD lit up
   g.flip();
 }
-
-var interval = setInterval(countDown, 1000);
