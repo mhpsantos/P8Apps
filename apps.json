@@ -331,14 +331,16 @@
       {"name":"test.img","url":"test-icon.js","evaluate":true }
     ]
   },
-  { "id": "batwid",
-    "name": "Battery Widget",
-    "version":"0.01",
-    "description": "Show the current battery level and charging status in the top right of the clock",
-    "tags": "widget",
-    "type":"widget",
-    "storage": [
-      {"name":"batwid.wid.js","url":"widget.js"}
-    ]
-  }
+  { "id": "battery_widget",
+  "name": "battery widget",
+  "shortName":"bat wid",
+  "icon": "widget.png",
+  "version":"0.01",
+  "description": "battery icons widget",
+  "tags": "widget",
+  "type": "widget",
+  "storage": [
+    {"name":"batterywid.wid.js","url":"widget.js"}
+  ]
+}
 ]
