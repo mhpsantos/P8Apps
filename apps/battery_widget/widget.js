@@ -14,8 +14,16 @@
     g.reset(); // reset the graphics context to defaults (color/font/etc)
       // add your code
     var batLevel = E.getBattery(); 
-     g.setFont("Vector",10);
-     g.drawString(batLevel, 20, 20);
+     if(batLevel >= 75){
+     g.drawImage(fullBat,210,0); 
+    }else if(batLevel >= 10){
+      g.drawImage(halfBat,210,0);
+    }else{
+      g.drawImage(emptyBat,210,0);
+    }
+    if(P8.isPower()){
+      g.drawImage(chargingBat, 210, 0);
+    }
   }
 
   // add your widget
