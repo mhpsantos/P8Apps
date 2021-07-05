@@ -1,5 +1,3 @@
-require("Font7x11Numeric7Seg").add(Graphics);
-
 function draw() {
   // Reset the state of the graphics library
   g.reset();
@@ -7,7 +5,6 @@ function draw() {
   g.clearRect(-100,100,100,-100);
   // draw the current time
   g.setFontAlign(0,0);
-  g.setFont("7x11Numeric7Seg",4);
   g.drawString("12345678890");
 }
 
