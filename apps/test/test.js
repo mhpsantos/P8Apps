@@ -1,4 +1,4 @@
-var variable = "interval";
+var variable = "clear";
 
 
 function drawtext() {
@@ -11,4 +11,5 @@ function drawtext() {
   g.flip();
 }
 
-var interval = setInterval(drawtext, 1000);
+g.clear();
+drawtext();
