@@ -10,4 +10,4 @@ function drawText() {
   g.flip();
 }
 
-drawText();
+var interval = setInterval(drawText, 60000);
