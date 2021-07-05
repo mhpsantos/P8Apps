@@ -1,4 +1,4 @@
-(() => {
+(function(){
   var chargingBat = require("heatshrink").decompress(atob("iEQ4MA/4ACBw3Avu4weE2+E1/n1/H0eUwcEu14ggYGA="));
   var fullBat = require("heatshrink").decompress(atob("iEQ4MA/4ACB49//GAgm/+m/+4BC+gJBBoIXH"));
   var halfBat = require("heatshrink").decompress(atob("iEQ4MA/4ACB49//GAgm+AIMHAIUEBIINBC44"));
