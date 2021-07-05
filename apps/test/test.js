@@ -1,4 +1,4 @@
-g.reset();
-g.clear();
+g.clear(true);
 // work out how to display the current time
-Bangle.buzz(100, 1);
+g.setFont("Vector", 50);
+g.drawString("TESTE");
