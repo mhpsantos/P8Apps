@@ -1,12 +1,12 @@
 function draw() {
   // work out how to display the current time
-  var d = new Date();
-  var h = d.getHours(), m = d.getMinutes();
-  var time = h + ":" + ("0"+m).substr(-2);
+  
+  var time = "teste display";
 
   // Reset the state of the graphics library
   g.reset();
   // draw the current time
+  g.setFont("Vector",50);
   g.drawString(time, 50, 50, true);
 }
 
