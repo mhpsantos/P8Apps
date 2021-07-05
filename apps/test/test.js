@@ -14,4 +14,3 @@ function draw() {
 g.clear();
 // draw immediately at first
 draw();
-var secondInterval = setInterval(draw, 1000);
