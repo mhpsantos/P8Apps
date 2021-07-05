@@ -330,5 +330,16 @@
       {"name":"test.app.js","url":"test.js"},
       {"name":"test.img","url":"test-icon.js","evaluate":true }
     ]
+  },
+  { "id": "batwid",
+    "name": "Battery Widget",
+    "shortName":"custom battery widget", 
+    "version":"0.01",
+    "description": "custom battery widget",
+    "tags": "widget",
+    "type": "widget",
+    "storage": [
+      {"name":"batwid.wid.js","url":"batwid.wid.js"}
+    ]
   }
 ]
