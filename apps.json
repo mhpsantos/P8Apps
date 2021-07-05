@@ -335,7 +335,7 @@
     "name": "Battery Widget",
     "version":"0.01",
     "description": "Show the current battery level and charging status in the top right of the clock",
-    "tags": "widget,battery",
+    "tags": "widget",
     "type":"widget",
     "storage": [
       {"name":"batwid.wid.js","url":"widget.js"}
