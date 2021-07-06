@@ -11,35 +11,36 @@ var numerals = {
   9:[[9,1,82,1,90,9,90,92,82,100,9,100,1,92,1,82,9,74,69,74,69,61,9,61,1,53,1,9, 9,1],[22,27,69,27,69,41,22,41, 22,27]],
 };
 
+
 function transformN(n,i,tx,ty){
   return g.transformVertices(numerals[n][i],{x:tx,y:ty,scale:1.1});
 }
 
 
 function drawH1(n){
-  layer1 = transformN(n, 0, 0, 5);
-  layer2 = transformN(n, 1, 0, 5);
-  layer3 = transformN(n, 2, 0, 5);
-  g.setColor(0xFF9901)
+  layer1 = transformN(n, 0, 30, 5);
+  layer2 = transformN(n, 1, 30, 5);
+  layer3 = transformN(n, 2, 30, 5);
+  g.setColor(0xff5555)
   g.fillPoly(layer1);
   g.setColor(0,0,0);
   g.fillPoly(layer2);
   g.fillPoly(layer3);
 }
 function drawH2(n){
-  layer1 = transformN(n, 0, 110, 5);
-  layer2 = transformN(n, 1, 110, 5);
-  layer3 = transformN(n, 2, 110, 5);
-  g.setColor(0xFF9901)
+  layer1 = transformN(n, 0, 140, 5);
+  layer2 = transformN(n, 1, 140, 5);
+  layer3 = transformN(n, 2, 140, 5);
+  g.setColor(0xff5555)
   g.fillPoly(layer1);
   g.setColor(0,0,0);
   g.fillPoly(layer2);
   g.fillPoly(layer3);
 }
 function drawM1(n){
-  layer1 = transformN(n, 0, 0, 125);
-  layer2 = transformN(n, 1, 0, 125);
-  layer3 = transformN(n, 2, 0, 125);
+  layer1 = transformN(n, 0, 30, 125);
+  layer2 = transformN(n, 1, 30, 125);
+  layer3 = transformN(n, 2, 30, 125);
   g.setColor(0xffffff)
   g.fillPoly(layer1);
   g.setColor(0,0,0);
@@ -47,13 +48,13 @@ function drawM1(n){
   g.fillPoly(layer3);
 }
 function drawM2(n){
-  layer1 = transformN(n, 0, 110, 125);
-  layer2 = transformN(n, 1, 110, 125);
-  layer3 = transformN(n, 2, 110, 125);
+  layer1 = transformN(n, 0, 140, 125);
+  layer2 = transformN(n, 1, 140, 125);
+  layer3 = transformN(n, 2, 140, 125);
   g.setColor(0xffffff)
   g.fillPoly(layer1);
   g.setColor(0,0,0);
-  g.Clear(layer2);
+  g.fillPoly(layer2);
   g.fillPoly(layer3);
 }
 
@@ -74,9 +75,9 @@ function drawTime(){
   drawH2(hour[1]);
   drawM1(min[0]);
   drawM2(min[1]);
-
+ 
 }
 
 g.clear();
 
-setTimeout(()=>{drawTime()},500);
+var interval = setInterval(drawTime, 1000);
