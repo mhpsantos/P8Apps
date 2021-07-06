@@ -1,15 +1,15 @@
-var img = require("heatshrink").decompress(atob("mEwwIYVwAFE4AFE8AFE+AFE/AEDh/8Aod//wFD///AgUD/4LDg/4C4cP4AjDj+AF4c/HYk+I4MEAoN8KYMMAoN4AQMeAo4nCj5XEh4FiFIQ7LAoRWBXwMBKwR+CSwkHgIFDh8DPAcfj54Dn//YAd//7MDUIgLBYoiWBAAZRCF4YFEg4FEI4IADKYIANA"));
+var i = 0;
 
-var counter = 0;
+var verts = [-5,-5, 5,-5, 5,5, -5,5];
 
-function draw() {
-  counter++;
-
+function draw(){
   g.clear();
-  // draw the current counter value
-  g.drawImage(img, g.getWidth()/2, g.getHeight()/2,
-            {scale:2, rotate:counter});
+  var verts2 = g.transformVertices(verts, {x:g.getWidth()/2, y:g.getHeight()/2,scale:8, rotate:i});
 
+  g.fillPoly(verts2);
+  
+  i+=1;
+  
 }
 
-var interval = setInterval(draw, 300);
+var interval = setInterval(draw, 500);
