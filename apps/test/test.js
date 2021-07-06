@@ -82,5 +82,5 @@ g.clear();
 
 setTimeout(()=>{drawTime()},500);
 if(P8.awake){
-  var interval = setInterval(drawTime, 15000);
+  drawTime();
 }
