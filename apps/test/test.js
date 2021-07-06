@@ -59,6 +59,8 @@ function drawM2(n){
 
 function drawTime(){
   
+  g.clear();
+  
   h1 = ("0"+(new Date()).getHours()).substr(0,1);
 
   h2 = ("0"+(new Date()).getHours()).substr(1,2);
