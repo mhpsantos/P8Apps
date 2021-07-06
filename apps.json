@@ -581,16 +581,16 @@
     ]
   },
   {
-    "id": "numerals",
-    "name": "Big Numerals clock face.",
+    "id": "bigclock",
+    "name": "Big Numerals",
     "shortName": "Big Numerals",
-    "icon": "app.png",
+    "icon": "bigclock.jpg",
     "version": "0.01",
     "description": "Big Numerals clock face.",
-    "tags": "clocks",
+    "tags": "clock",
     "storage": [
       {
-        "name": "numerals.app.js",
+        "name": "bigclock.app.js",
         "url": "app.js"
       }
     ]
