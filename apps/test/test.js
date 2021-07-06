@@ -85,7 +85,7 @@ function drawTime(){
 }
 
 function stopDraw() {
-  if(intervalRefSec) {
+  if(secondInterval) {
     var secondInterval=clearInterval(secondInterval);
   }
 }
