@@ -109,6 +109,6 @@ P8.on('sleep',function(b) {
 });
 g.clear();
 
-setTimeout(()=>{drawTime()},500);
+drawTime();
 
 var interval = setInterval(refresh, 1000);
