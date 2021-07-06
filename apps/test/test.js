@@ -82,21 +82,18 @@ function drawTime(){
   drawH2(hour[1]);
   drawM1(min[0]);
   drawM2(min[1]);
-   
-  g.setFont("Vector");
-  g.drawString("TESTE");
 }
 
 function stopDraw() {
   if(intervalRefSec) {
-    secondInterval=clearInterval(secondInterval);
+    var secondInterval=clearInterval(secondInterval);
   }
   g.clear();
 }
 
 function startDraw(){
   g.reset();
-  secondInterval = setInterval(drawTime,1000);
+  var secondInterval = setInterval(drawTime,1000);
 }
 
 g.clear();
