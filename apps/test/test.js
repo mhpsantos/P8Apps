@@ -62,8 +62,15 @@ function drawTime(){
   
   g.clear();
   
-  hour = ("0"+(new Date()).getHours());
-  min = new Date().getMinutes();
+  var hour = ("0"+(new Date()).getHours());
+  var min = new Date().getMinutes();
+  
+  if(hour<10) {
+    hour = ("0"+(new Date()).getHours()).substr(-2);
+  }else{
+    hour = ("0"+(new Date()).getHours()).substr(1,2);
+  }
+  
   
   if(min<10) {
     min = ("0"+(new Date()).getMinutes()).substr(-2);
@@ -80,8 +87,15 @@ function drawTime(){
 
 g.clear();
 
-setTimeout(()=>{drawTime()},500);
-if(P8.awake){
-  g.clear();
-  g.drawString("awake");
+function refresh(){
+  var sec = (new Date()).getSeconds();
+
+  if (sec === 0){
+    drawTime();
+  }
 }
+
+
+setTimeout(()=>{drawTime()},500);
+
+var interval = setInterval(refresh, 1000);
