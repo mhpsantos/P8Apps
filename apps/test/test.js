@@ -8,8 +8,8 @@ function draw(){
 
   g.fillPoly(verts2);
   
-  i+=1;
+  i+=0.5;
   
 }
 
-var interval = setInterval(draw, 500);
+var interval = setInterval(draw, 50);
