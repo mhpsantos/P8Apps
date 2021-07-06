@@ -80,4 +80,6 @@ function drawTime(){
 
 g.clear();
 
-var interval = setInterval(drawTime, 1000);
+setTimeout(()=>{drawTime()},500);
+
+var interval = setInterval(drawTime, 60000);
