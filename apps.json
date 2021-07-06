@@ -342,5 +342,18 @@
   "storage": [
     {"name":"batterywid.wid.js","url":"widget.js"}
   ]
-}
+  },
+  { "id": "numerals",
+  "name": "Big Numerals clock face.",
+  "shortName":"Big Numerals",
+  "icon": "app.png",
+  "version":"0.01",
+  "description": "Big Numerals clock face.",
+  "tags": "faces",
+  "readme": "README.md",
+  "storage": [
+    {"name":"numerals.app.js","url":"app.js"},
+    {"name":"numerals.img","url":"app-icon.js","evaluate":true}
+  ]
+  }
 ]
