@@ -1,4 +1,6 @@
 var buf = Graphics.createArrayBuffer(240,240,1,{msb:true});
+var img = require("heatshrink").decompress(atob("sFg4MA/4ACI/4AYgwLKh4LKj4LKn4LKv4LKSpUBBZUDBZUHBZUP//4LxLSB4BeIBYPwLxALB/wLKHpALDGA4vC//gI5JVIL4JtB/h3JJBCPCEwKnJEwOAX5AaBBY7XBDQJgIDQRgIDQQLHgwaCVJAaCPAkPPYoLEj5NEBYs/JokHSAgLFgYLEv4LFTggLMHYkBBaChFBYy3HBf4LuR4wLLWaLXWfZc/8ALJj/wHYn4BZMAAokfCIgAFh4pCsALGg5NCEwoLCRIQmHgf/QgJQEUIhsBOggLEFoLDGYoQtBEwQAFv4VBEwQAFn//8ABBBY0f/4ABMBIABMBIABMA45BAAJgHJAQLJh4jKGATDJKoJTHHoZrHBYaDHBYabHBYYKJZZAADLxAACLxIABLxUAsALKAH4ANA=="));
+
 var i=0;
 
 var verts = [-5,-5, 5,-5, 5,5, -5,5];
@@ -10,10 +12,11 @@ function flip() {
 var interval = setInterval(function(){ 
   
     buf.clear();
-    var verts2 = g.transformVertices(verts,{x:g.getWidth()/2,y:g.getHeight()/2,scale:4, rotate:i});
-    buf.fillPoly(verts2, true);
+    
+    buf.drawImage(img, g.getWidth()/2, g.getHeight()/2,
+            {scale:2, rotate:i});
     flip();
 
   
-  i+=0.5;
-}, 300);
+  i-=0.5;
+}, 100);
