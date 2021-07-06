@@ -85,18 +85,16 @@ function drawTime(){
 }
 
 function stopDraw() {
-  if(secondInterval) {
+  if(intervalRefSec) {
     var secondInterval=clearInterval(secondInterval);
   }
+  g.clear();
 }
 
 function startDraw(){
+  g.reset();
   var secondInterval = setInterval(drawTime,1000);
 }
-
-g.clear();
-// draw immediately at first
-drawTime();
 
 P8.on('sleep',function(b) {
   if (!b) {
@@ -105,3 +103,8 @@ P8.on('sleep',function(b) {
       stopDraw();
   }
 });
+
+setTimeout(()=>{
+  g.clear();
+  startDraw();
+},500);
