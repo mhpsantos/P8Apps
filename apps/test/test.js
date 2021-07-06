@@ -85,26 +85,28 @@ function drawTime(){
 }
 
 function stopDraw() {
-  if(intervalRefSec) {
-    var secondInterval=clearInterval(secondInterval);
+  if(interval) {
+    var secondInterval=clearInterval(interval);
   }
   g.clear();
 }
 
-function startDraw(){
-  g.reset();
-  var secondInterval = setInterval(drawTime,1000);
+function refresh(){
+  var sec = (new Date()).getSeconds();
+  if (sec === 0){
+    drawTime();
+  }
 }
 
 P8.on('sleep',function(b) {
   if (!b) {
-      startDraw();
+      refresh();
   } else {
       stopDraw();
   }
 });
+g.clear();
 
-setTimeout(()=>{
-  g.clear();
-  startDraw();
-},500);
+setTimeout(()=>{drawTime()},500);
+
+var interval = setInterval(refresh, 1000);
