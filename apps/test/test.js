@@ -82,5 +82,6 @@ g.clear();
 
 setTimeout(()=>{drawTime()},500);
 if(P8.awake){
-  drawTime();
+  g.clear();
+  g.drawString("awake");
 }
