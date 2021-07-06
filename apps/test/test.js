@@ -92,10 +92,7 @@ function stopDraw() {
 }
 
 function refresh(){
-  var sec = (new Date()).getSeconds();
-  if (sec === 0){
-    drawTime();
-  }
+  drawTime();
 }
 
 P8.on('sleep',function(b) {
