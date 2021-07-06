@@ -19,4 +19,4 @@ function drawNumber(){
 
 g.clear();
 
-setTimeout(()=>{drawNumber},500);
+setTimeout(()=>{drawNumber()},500);
