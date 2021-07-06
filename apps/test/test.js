@@ -53,7 +53,7 @@ function drawM2(n){
   g.setColor(0xffffff)
   g.fillPoly(layer1);
   g.setColor(0,0,0);
-  g.fillPoly(layer2);
+  g.Clear(layer2);
   g.fillPoly(layer3);
 }
 
@@ -61,19 +61,19 @@ function drawTime(){
   
   g.clear();
   
-  h1 = ("0"+(new Date()).getHours()).substr(0,1);
-
-  h2 = ("0"+(new Date()).getHours()).substr(1,2);
-
-  m1 = ("0"+(new Date()).getMinutes()).substr(0,1);
-
-  m2 = ("0"+(new Date()).getMinutes()).substr(1,2);
-
-  drawH1(h1);
-  drawH2(h2);
-  drawM1(m1);
-  drawM2(m2);
+  hour = ("0"+(new Date()).getHours());
+  min = new Date().getMinutes();
   
+  if(min<10) {
+    min = ("0"+(new Date()).getMinutes()).substr(-2);
+  }else{
+    min = ("0"+(new Date()).getMinutes()).substr(1,2);
+  }
+  
+  drawH1(hour[0]);
+  drawH2(hour[1]);
+  drawM1(min[0]);
+  drawM2(min[1]);
 
 }
 
