@@ -592,6 +592,11 @@
       {
         "name": "bigclock.app.js",
         "url": "app.js"
+      },
+      {
+        "name": "bigclock.img",
+        "url": "bigclock-icon.js",
+        "evaluate": true
       }
     ]
   }
