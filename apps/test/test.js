@@ -82,20 +82,31 @@ function drawTime(){
   drawH2(hour[1]);
   drawM1(min[0]);
   drawM2(min[1]);
- 
+   
+  g.setFont("Vector");
+  g.drawString("TESTE");
+}
+
+function stopDraw() {
+  if(intervalRefSec) {
+    secondInterval=clearInterval(secondInterval);
+  }
+  g.clear();
+}
+
+function startDraw(){
+  g.reset();
+  secondInterval = setInterval(drawTime,1000);
 }
 
 g.clear();
+// draw immediately at first
+drawTime();
 
-function refresh(){
-  var sec = (new Date()).getSeconds();
-
-  if (sec === 0){
-    drawTime();
+P8.on('sleep',function(b) {
+  if (!b) {
+      startDraw();
+  } else {
+      stopDraw();
   }
-}
-
-
-setTimeout(()=>{drawTime()},500);
-
-var interval = setInterval(refresh, 1000);
+});
