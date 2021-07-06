@@ -1,20 +1,19 @@
-var i = 0;
+var buf = Graphics.createArrayBuffer(240,240,1,{msb:true});
+var i=0;
 
 var verts = [-5,-5, 5,-5, 5,5, -5,5];
 
-function draw(){
-  g.clear();
-  if(i%2==0){
-    scale = 0.5;
-  }else{
-    scale=0.75;
-  }
-  var verts2 = g.transformVertices(verts, {x:g.getWidth()/2, y:g.getHeight()/2,scale:3+scale, rotate:0});
-
-  g.fillPoly(verts2);
-  
-  i++;
-  
+function flip() {
+  g.drawImage({width:240,height:240,bpp:1,buffer:buf.buffer},0,0);
 }
 
-var interval = setInterval(draw, 500);
+var interval = setInterval(function(){ 
+  
+    buf.clear();
+    var verts2 = g.transformVertices(verts,{x:g.getWidth()/2,y:g.getHeight()/2,scale:4, rotate:i});
+    buf.fillPoly(verts2, true);
+    flip();
+
+  
+  i+=0.5;
+}, 300);
