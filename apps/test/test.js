@@ -88,11 +88,9 @@ function stopDraw() {
   if(intervalRefSec) {
     var secondInterval=clearInterval(secondInterval);
   }
-  g.clear();
 }
 
 function startDraw(){
-  g.reset();
   var secondInterval = setInterval(drawTime,1000);
 }
 
