@@ -1,4 +1,9 @@
 var s = require("Storage");
+eval(s.read("widgets.js"));
+var y_wg_bottom=g.getHeight()-25; 
+var y_wg_top=24;     
+
+
 var apps = s.list(/\.info$/).map(app=>{var a=s.readJSON(app,1);return a&&{name:a.name,type:a.type,icon:a.icon,sortorder:a.sortorder,src:a.src};}).filter(app=>app && (app.type=="app" || app.type=="clock" || !app.type));
 apps.sort((a,b)=>{
   var n=(0|a.sortorder)-(0|b.sortorder);
@@ -7,42 +12,74 @@ apps.sort((a,b)=>{
   if (a.name>b.name) return 1;
   return 0;
 });
-var selected = 0;
-var menuScroll = 0;
-var menuShowing = false;
 
-function drawMenu() {
-  g.reset().setFont("6x8",2).setFontAlign(-1,0);
-  var w = g.getWidth();
-  var h = g.getHeight();
-  var m = w/2;
-  var n = (h-48)/64;
-  if (selected>=n+menuScroll) menuScroll = 1+selected-n;
-  if (selected<menuScroll) menuScroll = selected;
-  // arrows
-  g.setColor(menuScroll ? g.theme.fg : g.theme.bg);
-  g.fillPoly([m,6,m-14,20,m+14,20]);
-  g.setColor((apps.length>n+menuScroll) ? g.theme.fg : g.theme.bg);
-  g.fillPoly([m,h-7,m-14,h-21,m+14,h-21]);
-  // draw
-  g.setColor(g.theme.fg);
-  for (var i=0;i<n;i++) {
-    var app = apps[i+menuScroll];
-    if (!app) break;
-    var y = 24+i*64;
-    if (i+menuScroll==selected) {
-      g.setColor(g.theme.bgH).fillRect(0,y,w-1,y+63);
-      g.setColor(g.theme.fgH).drawRect(0,y,w-1,y+63);
-    } else
-      g.clearRect(0,y,w-1,y+63);
-    g.drawString(app.name,64,y+32);
-    var icon=undefined;
-    if (app.icon) icon = s.read(app.icon);
-    if (icon) try {g.drawImage(icon,8,y+8);} catch(e){}
-  }
+var Napps = apps.length;
+var Npages = Math.ceil(Napps);
+var maxPage = Npages-1;
+var selected = -1;
+var page = 0;
+
+function draw_icon(p,n,selected) {
+    var x = (n%3)*80; 
+    var y = n>2?130:40;
+    (selected?g.setColor(0.7,0.7,0.7):g.setColor(0,0,0)).fillRect(x,y,x+79,y+89);
+    g.drawImage(s.read(apps[p*6+n].icon),x+10,y+10,{scale:1.25});
+    g.setColor(-1).setFontAlign(0,-1,0).setFont("6x8",1).drawString(apps[p*6+n].name,x+40,y+74);
 }
-g.clear();
-drawMenu();
 
-P8.loadWidgets();
-P8.drawWidgets();
+function drawPage(p){
+    //g.setColor(0,0,0).fillRect(0,0,239,239);
+	  g.setColor(0,0,0).fillRect(0,y_wg_top,239,y_wg_bottom);
+	//is necesary??
+	  P8.drawWidgets();
+    //g.setFont("6x8",2).setFontAlign(0,-1,0).setColor(1,1,1).drawString("P8-Apps ("+(p+1)+"/"+Npages+")",120,12);
+	  g.setFont("6x8",2).setFontAlign(0,-1,0).setColor(1,1,1).drawString("P8-Apps ("+(p+1)+"/"+Npages+")",120,y_wg_top+2);
+    if (!apps[p*i]) return i;
+    draw_icon(p,i,false);
+    
+}
+
+TC.on("swipe",(dir)=>{
+    selected = -1;
+    if (dir==TC.LEFT){
+        ++page; if (page>maxPage) page=maxPage;
+        drawPage(page);
+    } else if (dir==TC.RIGHT){
+        --page; if (page<0) page=0;
+        drawPage(page);
+    }  
+});
+
+function isTouched(p,n){
+    if (n<0 || n>5) return false;
+    var x1 = (n%3)*80; var y1 = n>2?130:40;
+    var x2 = x1+79; var y2 = y1+89;
+    return (p.x>x1 && p.y>y1 && p.x<x2 && p.y<y2);
+}
+
+TC.on("touch",(p)=>{
+    var i;
+    for (i=0;i<6;i++){
+        if((page*6+i)<Napps){
+            if (isTouched(p,i)) {
+                draw_icon(page,i,true);
+                if (selected>=0) {
+                    if (selected!=i){
+                        draw_icon(page,selected,false);
+                    } else {
+                      if (D17.read()) reset(); else load(apps[page*6+i].src);
+                    }
+                }
+                selected=i;
+                break;
+            }
+        }
+    }
+    if ((i==6 || (page*6+i)>Napps) && selected>=0) {
+        draw_icon(page,selected,false);
+        selected=-1;
+    }
+});
+ P8.loadWidgets();    
+
+setTimeout(()=>{drawPage(0)},1000);
