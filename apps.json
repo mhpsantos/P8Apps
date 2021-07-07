@@ -599,5 +599,21 @@
         "evaluate": true
       }
     ]
+  },
+  {
+    "id": "charging-widget",
+    "name": "Charging Screen",
+    "shortName": "Charging",
+    "icon": "widget.png",
+    "version": "0.01",
+    "description": "Charge percentage screen.",
+    "tags": "widget",
+    "type": "widget",
+    "storage": [
+      {
+        "name": "charging.wid.js",
+        "url": "widget.js"
+      }
+    ]
   }
 ]
