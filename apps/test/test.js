@@ -1,144 +1,48 @@
-require("Font8x16").add(Graphics);
-
-var numerals = {
-    0: [
-        [9, 1, 82, 1, 90, 9, 90, 92, 82, 100, 9, 100, 1, 92, 1, 9, 9, 1],
-        [30, 25, 61, 25, 69, 33, 69, 67, 61, 75, 30, 75, 22, 67, 22, 33, 30, 25]
-    ],
-    1: [
-        [50, 1, 82, 1, 90, 9, 90, 92, 82, 100, 73, 100, 65, 92, 65, 27, 50, 27, 42, 19, 42, 9, 50, 1]
-    ],
-    2: [
-        [9, 1, 82, 1, 90, 9, 90, 53, 82, 61, 21, 61, 21, 74, 82, 74, 90, 82, 90, 92, 82, 100, 9, 100, 1, 92, 1, 48, 9, 40, 70, 40, 70, 27, 9, 27, 1, 19, 1, 9, 9, 1]
-    ],
-    3: [
-        [9, 1, 82, 1, 90, 9, 90, 92, 82, 100, 9, 100, 1, 92, 1, 82, 9, 74, 70, 74, 70, 61, 9, 61, 1, 53, 1, 48, 9, 40, 70, 40, 70, 27, 9, 27, 1, 19, 1, 9, 9, 1]
-    ],
-    4: [
-        [9, 1, 14, 1, 22, 9, 22, 36, 69, 36, 69, 9, 77, 1, 82, 1, 90, 9, 90, 92, 82, 100, 78, 100,
-            70, 92, 70, 61, 9, 61, 1, 53, 1, 9, 9, 1
-        ]
-    ],
-    5: [
-        [9, 1, 82, 1, 90, 9, 90, 19, 82, 27, 21, 27, 21, 40, 82, 40, 90, 48, 90, 92, 82, 100, 9, 100, 1, 92, 1, 82, 9, 74, 71, 74, 71, 61, 9, 61, 1, 53, 1, 9, 9, 1]
-    ],
-    6: [
-        [9, 1, 82, 1, 90, 9, 90, 19, 82, 27, 22, 27, 22, 40, 82, 40, 90, 48, 90, 92, 82, 100, 9, 100, 1, 92, 1, 9, 9, 1],
-        [22, 60, 69, 60, 69, 74, 22, 74, 22, 60]
-    ],
-    7: [
-        [9, 1, 82, 1, 90, 9, 90, 15, 20, 98, 9, 98, 1, 90, 1, 86, 56, 22, 9, 22, 1, 14, 1, 9, 9, 1]
-    ],
-    8: [
-        [9, 1, 82, 1, 90, 9, 90, 92, 82, 100, 9, 100, 1, 92, 1, 9, 9, 1],
-        [22, 27, 69, 27, 69, 43, 22, 43, 22, 27],
-        [22, 58, 69, 58, 69, 74, 22, 74, 22, 58]
-    ],
-    9: [
-        [9, 1, 82, 1, 90, 9, 90, 92, 82, 100, 9, 100, 1, 92,
-            1, 82, 9, 74, 69, 74, 69, 61, 9, 61, 1, 53, 1, 9, 9, 1
-        ],
-        [22, 27, 69, 27, 69, 41, 22, 41, 22, 27]
-    ]
-};
-
-function transformN(a, b, c, d) {
-    return g.transformVertices(numerals[a][b], {
-        x: c,
-        y: d,
-        scale: 1.1
-    })
-}
-
-function drawH1(a) {
-    layer1 = transformN(a, 0, 30, 5);
-    layer2 = transformN(a, 1, 30, 5);
-    layer3 = transformN(a, 2, 30, 5);
-    g.setColor(0xFFff5555);
-    g.fillPoly(layer1);
-    g.setColor(0, 0, 0);
-    g.fillPoly(layer2);
-    g.fillPoly(layer3)
-}
-
-function drawH2(a) {
-    layer1 = transformN(a, 0, 140, 5);
-    layer2 = transformN(a, 1, 140, 5);
-    layer3 = transformN(a, 2, 140, 5);
-    g.setColor(16733525);
-    g.fillPoly(layer1);
-    g.setColor(0, 0, 0);
-    g.fillPoly(layer2);
-    g.fillPoly(layer3)
-}
-
-function drawM1(a) {
-    layer1 = transformN(a, 0, 30, 125);
-    layer2 = transformN(a, 1, 30, 125);
-    layer3 = transformN(a, 2, 30, 125);
-    g.setColor(16777215);
-    g.fillPoly(layer1);
-    g.setColor(0, 0, 0);
-    g.fillPoly(layer2);
-    g.fillPoly(layer3)
-}
-
-function drawM2(a) {
-    layer1 = transformN(a, 0, 140, 125);
-    layer2 = transformN(a, 1, 140, 125);
-    layer3 = transformN(a, 2, 140, 125);
-    g.setColor(16777215);
-    g.fillPoly(layer1);
-    g.setColor(0, 0, 0);
-    g.fillPoly(layer2);
-    g.fillPoly(layer3);
-  
-}
-function drawDate(){
-  g.setFont8x16();
-g.drawString("0123456789");
-}
-function drawTime() {
-  g.setRotation(0);
-  g.reset();
-    g.clear();
-    var a = "0" + (new Date).getHours(),
-        b = (new Date).getMinutes(),
-        c = (new Date).getDate(),
-        d = (new Date).getMonth();
-    a = 10 > a ? ("0" + (new Date).getHours()).substr(-2) : ("0" + (new Date).getHours()).substr(1, 2);
-    b = 10 > b ? ("0" + (new Date).getMinutes()).substr(-2) : ("0" + (new Date).getMinutes()).substr(1, 2);
-    c = 10 > a ? ("0" + (new Date).getDate()).substr(-2) : ("0" + (new Date).getDate()).substr(1, 2);   
-    d = 10 < a ? ("0" + (new Date).getMonth()).substr(-2) : ("0" + ((new Date).getMonth()+1)).substr(1, 2);
-    drawH1(a[0]);
-    drawH2(a[1]);
-    drawM1(b[0]);
-    drawM2(b[1]);
-    drawDate(c,d);
-}
-
-
-function drawDate(date, month){
-  g.setColor(-1);
-  g.setRotation(3);
-  g.setFont8x16();
-  g.drawString(date + "-" + month,104);
-}
-function stopDraw() {
-    interval && clearInterval(interval);
-    g.clear()
-}
-
-function refresh() {
-    0 === (new Date).getSeconds() && drawTime();
-}
-
-P8.on("sleep", function(a) {
-    a ? stopDraw() : (drawTime(), refresh())
+var s = require("Storage");
+var apps = s.list(/\.info$/).map(app=>{var a=s.readJSON(app,1);return a&&{name:a.name,type:a.type,icon:a.icon,sortorder:a.sortorder,src:a.src};}).filter(app=>app && (app.type=="app" || app.type=="clock" || !app.type));
+apps.sort((a,b)=>{
+  var n=(0|a.sortorder)-(0|b.sortorder);
+  if (n) return n; // do sortorder first
+  if (a.name<b.name) return -1;
+  if (a.name>b.name) return 1;
+  return 0;
 });
+var selected = 0;
+var menuScroll = 0;
+var menuShowing = false;
 
-setTimeout(() => {
-    drawTime();
-}, 100);
-var interval = setInterval(refresh, 1E3);
+function drawMenu() {
+  g.reset().setFont("6x8",2).setFontAlign(-1,0);
+  var w = g.getWidth();
+  var h = g.getHeight();
+  var m = w/2;
+  var n = (h-48)/64;
+  if (selected>=n+menuScroll) menuScroll = 1+selected-n;
+  if (selected<menuScroll) menuScroll = selected;
+  // arrows
+  g.setColor(menuScroll ? g.theme.fg : g.theme.bg);
+  g.fillPoly([m,6,m-14,20,m+14,20]);
+  g.setColor((apps.length>n+menuScroll) ? g.theme.fg : g.theme.bg);
+  g.fillPoly([m,h-7,m-14,h-21,m+14,h-21]);
+  // draw
+  g.setColor(g.theme.fg);
+  for (var i=0;i<n;i++) {
+    var app = apps[i+menuScroll];
+    if (!app) break;
+    var y = 24+i*64;
+    if (i+menuScroll==selected) {
+      g.setColor(g.theme.bgH).fillRect(0,y,w-1,y+63);
+      g.setColor(g.theme.fgH).drawRect(0,y,w-1,y+63);
+    } else
+      g.clearRect(0,y,w-1,y+63);
+    g.drawString(app.name,64,y+32);
+    var icon=undefined;
+    if (app.icon) icon = s.read(app.icon);
+    if (icon) try {g.drawImage(icon,8,y+8);} catch(e){}
+  }
+}
+g.clear();
+drawMenu();
 
+P8.loadWidgets();
+P8.drawWidgets();
