@@ -3,9 +3,6 @@ Copyright (c) 2015 Gordon Williams, Pur3 Ltd. See the file LICENSE for copying p
 
 Updated for use in Twatch by Jeff Magee
  */
-function loadAnim(){var a=Graphics.createArrayBuffer(240,240,1,{msb:!0}),c=require("heatshrink").decompress(atob("sFg4MA/4ACI/4AYgwLKh4LKj4LKn4LKv4LKSpUBBZUDBZUHBZUP//4LxLSB4BeIBYPwLxALB/wLKHpALDGA4vC//gI5JVIL4JtB/h3JJBCPCEwKnJEwOAX5AaBBY7XBDQJgIDQRgIDQQLHgwaCVJAaCPAkPPYoLEj5NEBYs/JokHSAgLFgYLEv4LFTggLMHYkBBaChFBYy3HBf4LuR4wLLWaLXWfZc/8ALJj/wHYn4BZMAAokfCIgAFh4pCsALGg5NCEwoLCRIQmHgf/QgJQEUIhsBOggLEFoLDGYoQtBEwQAFv4VBEwQAFn//8ABBBY0f/4ABMBIABMBIABMA45BAAJgHJAQLJh4jKGATDJKoJTHHoZrHBYaDHBYabHBYYKJZZAADLxAACLxIABLxUAsALKAH4ANA==")),
-b=0;setInterval(function(){a.clear();a.drawImage(c,g.getWidth()/2,g.getHeight()/2,{scale:1,rotate:b});g.drawImage({width:240,height:240,bpp:1,buffer:a.buffer},0,0);b-=.5},100)};
-
 function ST7789() {
     var LCD_WIDTH = 240;
     var LCD_HEIGHT = 240;
@@ -79,8 +76,7 @@ function ST7789() {
         g.lcd_wake = function(){cmd(0x29);cmd(0x11);};
 	g.setFontAlign(0,0);
         dispinit(rst, ()=>{
-		g.clear().setFont("Vector",24),
-		loadAnim();
+		g.clear().setFont("Vector",24)g.drawString("...");
 	});
         return g;
     }
