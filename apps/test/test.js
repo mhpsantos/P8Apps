@@ -14,7 +14,7 @@ apps.sort((a,b)=>{
 });
 
 var Napps = apps.length;
-var Npages = Math.ceil(Napps);
+var Npages = Math.ceil(Napps/4);
 var maxPage = Npages-1;
 var selected = -1;
 var page = 0;
@@ -23,20 +23,21 @@ function draw_icon(p,n,selected) {
     var x = (n%3)*80; 
     var y = n>2?130:40;
     (selected?g.setColor(0.7,0.7,0.7):g.setColor(0,0,0)).fillRect(x,y,x+79,y+89);
-    g.drawImage(s.read(apps[p*4+n].icon),x+10,y+10,{scale:2});
-    g.setColor(-1).setFontAlign(0,-1,0).setFont("6x8",1).drawString(apps[p*4+n].name,x+40,y+74);
+    g.drawImage(s.read(apps[p*6+n].icon),x+10,y+10,{scale:1.75});
+    g.setColor(-1).setFontAlign(0,-1,0).setFont("6x8",1).drawString(apps[p*6+n].name,x+40,y+74);
 }
 
 function drawPage(p){
     //g.setColor(0,0,0).fillRect(0,0,239,239);
-	  g.setColor(0,0,0).fillRect(0,y_wg_top,239,y_wg_bottom);
+	g.setColor(0,0,0).fillRect(0,y_wg_top,239,y_wg_bottom);
 	//is necesary??
-	  P8.drawWidgets();
+	P8.drawWidgets();
     //g.setFont("6x8",2).setFontAlign(0,-1,0).setColor(1,1,1).drawString("P8-Apps ("+(p+1)+"/"+Npages+")",120,12);
-	  g.setFont("6x8",2).setFontAlign(0,-1,0).setColor(1,1,1).drawString("P8-Apps ("+(p+1)+"/"+Npages+")",120,y_wg_top+2);
-    if (!apps[p*i]) return i;
-    draw_icon(p,i,false);
-    
+	g.setFont("6x8",2).setFontAlign(0,-1,0).setColor(1,1,1).drawString("P8-Apps ("+(p+1)+"/"+Npages+")",120,y_wg_top+2);
+    for (var i=0;i<4;i++) {
+        if (!apps[p*4+i]) return i;
+        draw_icon(p,i,false);
+    }
 }
 
 TC.on("swipe",(dir)=>{
@@ -59,15 +60,15 @@ function isTouched(p,n){
 
 TC.on("touch",(p)=>{
     var i;
-    for (i=0;i<6;i++){
-        if((page*6+i)<Napps){
+    for (i=0;i<4;i++){
+        if((page*4+i)<Napps){
             if (isTouched(p,i)) {
                 draw_icon(page,i,true);
                 if (selected>=0) {
                     if (selected!=i){
                         draw_icon(page,selected,false);
                     } else {
-                      if (D17.read()) reset(); else load(apps[page*6+i].src);
+                      if (D17.read()) reset(); else load(apps[page*4+i].src);
                     }
                 }
                 selected=i;
@@ -75,7 +76,7 @@ TC.on("touch",(p)=>{
             }
         }
     }
-    if ((i==6 || (page*6+i)>Napps) && selected>=0) {
+    if ((i==4 || (page*4+i)>Napps) && selected>=0) {
         draw_icon(page,selected,false);
         selected=-1;
     }
