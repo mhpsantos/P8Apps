@@ -561,7 +561,11 @@
         "name": "test.img",
         "url": "test-icon.js",
         "evaluate": true
-      }
+      },
+      {"name":"test.settings.js","url":"test.settings.js"}
+    ],
+    "data":[
+      {"name":"test.json"}
     ]
   },
   {
