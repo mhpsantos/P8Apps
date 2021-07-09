@@ -102,11 +102,10 @@ function setUpdateInt(set){
 g.clear(1);
 if (settings.color>0) _rCol=settings.color-1;
 setUpdateInt(1);
-draw();
+setTimeout(() => {
+    draw();
+}, 100);
 
-if (settings.showDate) {
-  TC.on('touch', () => draw(1));
-}
 P8.on('sleep',function(b) {
   if (!b) {
     if (settings.color==0) _rCol = Math.floor(Math.random()*_hCol.length);
@@ -114,5 +113,3 @@ P8.on('sleep',function(b) {
     setUpdateInt(1);
   } else setUpdateInt(0);
 });
-
-P8.loadWidgets();  
