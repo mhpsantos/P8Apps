@@ -30,13 +30,6 @@ var drawFuncs = {
     if (isHole) g.setColor(0,0,0);
     g.fillPoly(poly,true);
   },
-  framefill : function(poly,isHole){
-    var c = g.getColor();
-    g.setColor(isHole ? g.theme.bg : ((c&0b1111011111011110)>>1)); // 16 bit half bright
-    g.fillPoly(poly,true);
-    g.setColor(c);
-    g.drawPoly(poly,true);
-  },
   frame : function(poly,isHole){
     g.drawPoly(poly,true);
   },
