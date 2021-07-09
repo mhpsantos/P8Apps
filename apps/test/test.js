@@ -1,86 +1,118 @@
-var s = require("Storage");
-eval(s.read("widgets.js"));
-var y_wg_bottom=g.getHeight()-25; 
-var y_wg_top=24;     
+/**
+ * Bangle.js Numerals Clock
+ *
+ * + Original Author: Raik M. https://github.com/ps-igel
+ * + Created: April 2020
+ * + see README.md for details
+ */
 
+var numerals = {
+  0:[[9,1,82,1,90,9,90,92,82,100,9,100,1,92,1,9],[30,25,61,25,69,33,69,67,61,75,30,75,22,67,22,33]],
+  1:[[50,1,82,1,90,9,90,92,82,100,73,100,65,92,65,27,50,27,42,19,42,9]],
+  2:[[9,1,82,1,90,9,90,53,82,61,21,61,21,74,82,74,90,82,90,92,82,100,9,100,1,92,1,48,9,40,70,40,70,27,9,27,1,19,1,9]],
+  3:[[9,1,82,1,90,9,90,92,82,100,9,100,1,92,1,82,9,74,70,74,70,61,9,61,1,53,1,48,9,40,70,40,70,27,9,27,1,19,1,9]],
+  4:[[9,1,14,1,22,9,22,36,69,36,69,9,77,1,82,1,90,9,90,92,82,100,78,100,70,92,70,61,9,61,1,53,1,9]],
+  5:[[9,1,82,1,90,9,90,19,82,27,21,27,21,40,82,40,90,48,90,92,82,100,9,100,1,92,1,82,9,74,71,74,71,61,9,61,1,53,1,9]],
+  6:[[9,1,82,1,90,9,90,19,82,27,22,27,22,40,82,40,90,48,90,92,82,100,9,100,1,92,1,9],[22,60,69,60,69,74,22,74]],
+  7:[[9,1,82,1,90,9,90,15,20,98,9,98,1,90,1,86,56,22,9,22,1,14,1,9]],
+  8:[[9,1,82,1,90,9,90,92,82,100,9,100,1,92,1,9],[22,27,69,27,69,43,22,43],[22,58,69,58,69,74,22,74]],
+  9:[[9,1,82,1,90,9,90,92,82,100,9,100,1,92,1,82,9,74,69,74,69,61,9,61,1,53,1,9],[22,27,69,27,69,41,22,41]],
+};
+var _12hour = (require("Storage").readJSON("setting.json",1)||{})["12hour"]||false;
+var _hCol = ["#ff5555","#ffff00","#FF9901","#2F00FF"];
+var _mCol = ["#55ff55","#ffffff","#00EFEF","#FFBF00"];
+var _rCol = 0;
+var scale = g.getWidth()/240;
+var interval = 0;
+const REFRESH_RATE = 10E3;
+var drawFuncs = {
+  fill : function(poly,isHole){
+    if (isHole) g.setColor(g.theme.bg);
+    g.fillPoly(poly,true);
+  },
+  framefill : function(poly,isHole){
+    var c = g.getColor();
+    g.setColor(isHole ? g.theme.bg : ((c&0b1111011111011110)>>1)); // 16 bit half bright
+    g.fillPoly(poly,true);
+    g.setColor(c);
+    g.drawPoly(poly,true);
+  },
+  frame : function(poly,isHole){
+    g.drawPoly(poly,true);
+  },
+  thickframe : function(poly,isHole){
+    g.drawPoly(poly,true);
+    g.drawPoly(translate(1,0,poly),true);
+    g.drawPoly(translate(1,1,poly),true);
+    g.drawPoly(translate(0,1,poly),true);
+  }
+};
 
-var apps = s.list(/\.info$/).map(app=>{var a=s.readJSON(app,1);return a&&{name:a.name,type:a.type,icon:a.icon,sortorder:a.sortorder,src:a.src};}).filter(app=>app && (app.type=="app" || app.type=="clock" || !app.type));
-apps.sort((a,b)=>{
-  var n=(0|a.sortorder)-(0|b.sortorder);
-  if (n) return n; // do sortorder first
-  if (a.name<b.name) return -1;
-  if (a.name>b.name) return 1;
-  return 0;
-});
-
-var Napps = apps.length;
-var Npages = Math.ceil(Napps/4);
-var maxPage = Npages-1;
-var selected = -1;
-var page = 0;
-
-function draw_icon(p,n,selected) {
-    var x = (n%3)*80; 
-    var y = n>2?130:40;
-    (selected?g.setColor(0.7,0.7,0.7):g.setColor(0,0,0)).fillRect(x,y,x+79,y+89);
-    g.drawImage(s.read(apps[p*6+n].icon),x+10,y+10,{scale:1.75});
-    g.setColor(-1).setFontAlign(0,-1,0).setFont("6x8",1).drawString(apps[p*6+n].name,x+40,y+74);
+function translate(tx, ty, p){
+  //return p.map((x, i)=> x+((i&1)?ty:tx));
+  return g.transformVertices(p, {x:tx,y:ty,scale:scale});
 }
 
-function drawPage(p){
-    //g.setColor(0,0,0).fillRect(0,0,239,239);
-	g.setColor(0,0,0).fillRect(0,y_wg_top,239,y_wg_bottom);
-	//is necesary??
-	P8.drawWidgets();
-    //g.setFont("6x8",2).setFontAlign(0,-1,0).setColor(1,1,1).drawString("P8-Apps ("+(p+1)+"/"+Npages+")",120,12);
-	g.setFont("6x8",2).setFontAlign(0,-1,0).setColor(1,1,1).drawString("P8-Apps ("+(p+1)+"/"+Npages+")",120,y_wg_top+2);
-    for (var i=0;i<4;i++) {
-        if (!apps[p*4+i]) return i;
-        draw_icon(p,i,false);
-    }
+
+let settings = require('Storage').readJSON('numerals.json',1);
+if (!settings) {
+  settings = {
+    color:0,
+    drawMode:"fill",
+    showDate:0
+  };
 }
 
-TC.on("swipe",(dir)=>{
-    selected = -1;
-    if (dir==TC.LEFT){
-        ++page; if (page>maxPage) page=maxPage;
-        drawPage(page);
-    } else if (dir==TC.RIGHT){
-        --page; if (page<0) page=0;
-        drawPage(page);
-    }  
-});
-
-function isTouched(p,n){
-    if (n<0 || n>5) return false;
-    var x1 = (n%3)*80; var y1 = n>2?130:40;
-    var x2 = x1+79; var y2 = y1+89;
-    return (p.x>x1 && p.y>y1 && p.x<x2 && p.y<y2);
+function drawNum(num,col,x,y,func,funcName){
+  g.setColor(col);
+  let tx = (x*100+25) * scale;
+  let ty = (y*104+32) * scale;
+  for (let i=0;i<numerals[num].length;i++){
+    g.setColor(col);
+    func(translate(tx,ty,numerals[num][i]), i>0);
+  }
 }
 
-TC.on("touch",(p)=>{
-    var i;
-    for (i=0;i<4;i++){
-        if((page*4+i)<Napps){
-            if (isTouched(p,i)) {
-                draw_icon(page,i,true);
-                if (selected>=0) {
-                    if (selected!=i){
-                        draw_icon(page,selected,false);
-                    } else {
-                      if (D17.read()) reset(); else load(apps[page*4+i].src);
-                    }
-                }
-                selected=i;
-                break;
-            }
-        }
-    }
-    if ((i==4 || (page*4+i)>Napps) && selected>=0) {
-        draw_icon(page,selected,false);
-        selected=-1;
-    }
-});
- P8.loadWidgets();    
+function draw(date){
+  let d = new Date();
+  let l1, l2;
+  if (date) {
+    setUpdateInt(0);
+    l1 = ("0"+(new Date()).getDate()).substr(-2);
+    l2 = ("0"+((new Date()).getMonth()+1)).substr(-2);
+    setTimeout(()=>{ draw(); setUpdateInt(1); }, 5000);
+  } else {
+    l1 = ("0"+(_12hour?d.getHours()%12:d.getHours())).substr(-2);
+    l2 = ("0"+d.getMinutes()).substr(-2);
+  }
+  var drawFunc = drawFuncs[settings.drawMode];
+  if (drawFunc==undefined) drawFunc=drawFuncs.fill;
+  g.clearRect(0,24,240,240);
+  drawNum(l1[0],_hCol[_rCol],0,0,drawFunc);
+  drawNum(l1[1],_hCol[_rCol],1,0,drawFunc);
+  drawNum(l2[0],_mCol[_rCol],0,1,drawFunc);
+  drawNum(l2[1],_mCol[_rCol],1,1,drawFunc);
+}
 
-setTimeout(()=>{drawPage(0)},1000);
+function setUpdateInt(set){
+  if (interval) clearInterval(interval);
+  if (set) interval=setInterval(draw, REFRESH_RATE);
+}
+
+g.clear(1);
+if (settings.color>0) _rCol=settings.color-1;
+setUpdateInt(1);
+draw();
+
+if (settings.showDate) {
+  TC.on('touch', () => draw(1));
+}
+P8.on('sleep',function(b) {
+  if (!b) {
+    if (settings.color==0) _rCol = Math.floor(Math.random()*_hCol.length);
+    draw();
+    setUpdateInt(1);
+  } else setUpdateInt(0);
+});
+
+P8.loadWidgets();  
