@@ -12,7 +12,7 @@
   }
   let numeralsSettings = storage.readJSON('numerals.json',1);
   if (!numeralsSettings) resetSettings();
-  let dm = ["fill","frame","framefill","thickframe"];
+  let dm = ["fill","frame","thickframe"];
   let col = ["rnd","r/g","y/w","o/c","b/y"];
   let btn = [[24,"BTN1"],[22,"BTN2"],[23,"BTN3"],[11,"BTN4"],[16,"BTN5"]];
   var menu={
