@@ -104,7 +104,7 @@ if (settings.color>0) _rCol=settings.color-1;
 setUpdateInt(1);
 setTimeout(() => {
     draw();
-}, 50);
+}, 100);
 
 if (settings.showDate) {
   Bangle.on('touch', () => draw(1));
