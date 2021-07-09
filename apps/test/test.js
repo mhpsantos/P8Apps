@@ -27,12 +27,12 @@ var interval = 0;
 const REFRESH_RATE = 10E3;
 var drawFuncs = {
   fill : function(poly,isHole){
-    if (isHole) g.setColor(g.theme.bg);
+    if (isHole) g.setColor(0,0,0);
     g.fillPoly(poly,true);
   },
   framefill : function(poly,isHole){
     var c = g.getColor();
-    g.setColor(isHole ? g.theme.bg : ((c&0b1111011111011110)>>1)); // 16 bit half bright
+    g.setColor(isHole ? g.theme.bg : (0,0,0)); // 16 bit half bright
     g.fillPoly(poly,true);
     g.setColor(c);
     g.drawPoly(poly,true);
@@ -113,3 +113,5 @@ P8.on('sleep',function(b) {
     setUpdateInt(1);
   } else setUpdateInt(0);
 });
+
+P8.loadWidgets();
