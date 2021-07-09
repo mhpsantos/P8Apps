@@ -32,7 +32,7 @@ var drawFuncs = {
   },
   framefill : function(poly,isHole){
     var c = g.getColor();
-    g.setColor(isHole ? g.theme.bg : (0,0,0)); // 16 bit half bright
+    g.setColor(isHole ? g.theme.bg : (0x000000)); // 16 bit half bright
     g.fillPoly(poly,true);
     g.setColor(c);
     g.drawPoly(poly,true);
@@ -104,7 +104,11 @@ if (settings.color>0) _rCol=settings.color-1;
 setUpdateInt(1);
 setTimeout(() => {
     draw();
-}, 100);
+}, 50);
+
+if (settings.showDate) {
+  Bangle.on('touch', () => draw(1));
+}
 
 P8.on('sleep',function(b) {
   if (!b) {
