@@ -554,7 +554,7 @@
     "description": "Simple Test",
     "storage": [
       {
-        "name": "test.app.js",
+        "name": "test.wid.js",
         "url": "test.js"
       },
       {
