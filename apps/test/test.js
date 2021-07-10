@@ -1,114 +1,28 @@
-/**
- * Bangle.js Numerals Clock
- *
- * + Original Author: Raik M. https://github.com/ps-igel
- * + Created: April 2020
- * + see README.md for details
- */
+g.clear().flip();
+var imgbat = require("heatshrink").decompress(atob("nlWhH+AH4A/AH4AHwoAQHXQ8pHf47rF6YAXHXQ8OHVo8NHf47/Hf47/Hf47/Hf47/Hf47/Hf47r1I766Y756Z351I766ayTHco6BHfCxBHfI6CdyY7jHQQ73WIayUHcQ6DHew6EHeqxEdyo7gOwo70HQqyVHbyxFHeo6GHeY6Hdyo7cWI47zHQ6yWHbY6IHeKxIABa9MHbI6TQJo7YHUI7YWMKzbQKQYOHdYYPHcK9IWJw7sDKA7hHTA7pWKA7qDKQ7gdwwaTHcyxSHcR2ZHcwZUHcqxUHcLuEHSo7kHSw7gWLI7kHS47iHTA7fdwKxYHcQ6ZHb46bO8A76ADg7/Hf47/Hf47/Hf47/Hf47/Hf47/HbY8uHRg8tHRwA/AH4AsA=="));
+var imgbubble = require("heatshrink").decompress(atob("ikQhH+AAc0AAgKEAAwRFCpgMDnVerwULCIuCCYoUGCQQQBnQ9MA4Q3GChI5DEpATIJYISKCY46LCYwANCa4UObJ7INeCoSOCpAOI"));
 
-var numerals = {
-  0:[[9,1,82,1,90,9,90,92,82,100,9,100,1,92,1,9],[30,25,61,25,69,33,69,67,61,75,30,75,22,67,22,33]],
-  1:[[50,1,82,1,90,9,90,92,82,100,73,100,65,92,65,27,50,27,42,19,42,9]],
-  2:[[9,1,82,1,90,9,90,53,82,61,21,61,21,74,82,74,90,82,90,92,82,100,9,100,1,92,1,48,9,40,70,40,70,27,9,27,1,19,1,9]],
-  3:[[9,1,82,1,90,9,90,92,82,100,9,100,1,92,1,82,9,74,70,74,70,61,9,61,1,53,1,48,9,40,70,40,70,27,9,27,1,19,1,9]],
-  4:[[9,1,14,1,22,9,22,36,69,36,69,9,77,1,82,1,90,9,90,92,82,100,78,100,70,92,70,61,9,61,1,53,1,9]],
-  5:[[9,1,82,1,90,9,90,19,82,27,21,27,21,40,82,40,90,48,90,92,82,100,9,100,1,92,1,82,9,74,71,74,71,61,9,61,1,53,1,9]],
-  6:[[9,1,82,1,90,9,90,19,82,27,22,27,22,40,82,40,90,48,90,92,82,100,9,100,1,92,1,9],[22,60,69,60,69,74,22,74]],
-  7:[[9,1,82,1,90,9,90,15,20,98,9,98,1,90,1,86,56,22,9,22,1,14,1,9]],
-  8:[[9,1,82,1,90,9,90,92,82,100,9,100,1,92,1,9],[22,27,69,27,69,43,22,43],[22,58,69,58,69,74,22,74]],
-  9:[[9,1,82,1,90,9,90,92,82,100,9,100,1,92,1,82,9,74,69,74,69,61,9,61,1,53,1,9],[22,27,69,27,69,41,22,41]],
-};
-var _12hour = (require("Storage").readJSON("setting.json",1)||{})["12hour"]||false;
-var _hCol = ["#ff5555","#ffff00","#FF9901","#2F00FF"];
-var _mCol = ["#55ff55","#ffffff","#00EFEF","#FFBF00"];
-var _rCol = 0;
-var scale = g.getWidth()/240;
-var interval = 0;
-const REFRESH_RATE = 10E3;
-var drawFuncs = {
-  fill : function(poly,isHole){
-    if (isHole) g.setColor(0,0,0);
-    g.fillPoly(poly,true);
-  },
-  frame : function(poly,isHole){
-    g.drawPoly(poly,true);
-  },
-  thickframe : function(poly,isHole){
-    g.drawPoly(poly,true);
-    g.drawPoly(translate(1,0,poly),true);
-    g.drawPoly(translate(1,1,poly),true);
-    g.drawPoly(translate(0,1,poly),true);
-  }
-};
-
-function translate(tx, ty, p){
-  //return p.map((x, i)=> x+((i&1)?ty:tx));
-  return g.transformVertices(p, {x:tx,y:ty,scale:scale});
+ var W=240,H=240;
+var bubbles = [];
+for (var i=0;i<10;i++) {
+  bubbles.push({y:Math.random()*H,ly:0,x:(0.5+(i<5?i:i+8))*W/18,v:0.6+Math.random(),s:0.5+Math.random()});
 }
 
-
-let settings = require('Storage').readJSON('numerals.json',1);
-if (!settings) {
-  settings = {
-    color:0,
-    drawMode:"fill",
-    showDate:0
-  };
+function anim() {
+  /* we don't use any kind of buffering here. Just draw one image
+  at a time (image contains a background) too, and there is minimal
+  flicker. */  
+  var mx = 120, my = 120;
+  bubbles.forEach(f=>{
+    f.y-=f.v;if (f.y<-24) f.y=H+8;
+    g.drawImage(imgbubble,f.y,f.x,{scale:f.s});
+  });
+  g.drawImage(imgbat, mx,my,{rotate:Math.sin(getTime()*2)*0.5-Math.PI/2});
+  g.flip();
 }
 
-function drawNum(num,col,x,y,func,funcName){
-  g.setColor(col);
-  let tx = (x*100+25) * scale;
-  let ty = (y*104+32) * scale;
-  for (let i=0;i<numerals[num].length;i++){
-    g.setColor(col);
-    func(translate(tx,ty,numerals[num][i]), i>0);
-  }
-}
+setInterval(anim,20);
 
-function draw(date){
-  let d = new Date();
-  let l1, l2;
-  if (date) {
-    setUpdateInt(0);
-    l1 = ("0"+(new Date()).getDate()).substr(-2);
-    l2 = ("0"+((new Date()).getMonth()+1)).substr(-2);
-    setTimeout(()=>{ draw(); setUpdateInt(1); }, 5000);
-  } else {
-    l1 = ("0"+(_12hour?d.getHours()%12:d.getHours())).substr(-2);
-    l2 = ("0"+d.getMinutes()).substr(-2);
-  }
-  var drawFunc = drawFuncs[settings.drawMode];
-  if (drawFunc==undefined) drawFunc=drawFuncs.fill;
-  g.clearRect(0,24,240,240);
-  drawNum(l1[0],_hCol[_rCol],0,0,drawFunc);
-  drawNum(l1[1],_hCol[_rCol],1,0,drawFunc);
-  drawNum(l2[0],_mCol[_rCol],0,1,drawFunc);
-  drawNum(l2[1],_mCol[_rCol],1,1,drawFunc);
-}
-
-function setUpdateInt(set){
-  if (interval) clearInterval(interval);
-  if (set) interval=setInterval(draw, REFRESH_RATE);
-}
-
-g.clear(1);
-if (settings.color>0) _rCol=settings.color-1;
-setUpdateInt(1);
-setTimeout(() => {
-    draw();
-}, 100);
-
-if (settings.showDate) {
-  TC.on('touch', () => draw(1));
-}
-
-P8.on('sleep',function(b) {
-  if (!b) {
-    if (settings.color==0) _rCol = Math.floor(Math.random()*_hCol.length);
-    draw();
-    setUpdateInt(1);
-  } else setUpdateInt(0);
-});
-
-P8.loadWidgets();
+P8.on('power',function(charging) {
+    load();
+  });
