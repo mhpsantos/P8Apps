@@ -24,7 +24,7 @@
 
  setInterval(anim,20);
 
-if (P8.isPower()) {
+ P8.on('power',function(charging) {
     load();
-}
+  });
  })()
