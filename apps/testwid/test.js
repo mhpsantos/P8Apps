@@ -24,6 +24,7 @@
 function load(){
   P8.wake()
   setTimeout(()=>{anim();},100);
+  setInterval(anim(), 20);
 }
 
   if(P8.isPower()){
