@@ -22,7 +22,7 @@
    g.flip();
  }
 function load(){
-  anim();
+  setTimeout(()=>{anim();},100);
 }
 
   if(P8.isPower()){
