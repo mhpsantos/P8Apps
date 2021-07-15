@@ -569,14 +569,8 @@
     "version": "0.01",
     "description": "Simple Test",
     "storage": [
-      {
-        "name": "test.wid.js",
-        "url": "test.js"
-      },
-      {
-        "name": "test.img",
-        "url": "test-icon.js",
-      }
+      {"name": "test.wid.js","url": "test.js"},
+      {"name": "test.img","url": "test-icon.js"}
     ]
   },
   {
