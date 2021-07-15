@@ -547,6 +547,22 @@
     ]
   },
   {
+   "id": "testwid",
+    "name": "test widget",
+    "shortName": "test wid",
+    "icon": "widget.png",
+    "version": "0.01",
+    "description": "test widget",
+    "tags": "widget",
+    "type": "widget",
+    "storage": [
+      {
+        "name": "test.wid.js",
+        "url": "test.js"
+      }
+    ]
+  },
+  {
     "id": "test",
     "name": "test",
     "icon": "test.png",
@@ -560,12 +576,7 @@
       {
         "name": "test.img",
         "url": "test-icon.js",
-        "evaluate": true
-      },
-      {"name":"test.settings.js","url":"test.settings.js"}
-    ],
-    "data":[
-      {"name":"test.json"}
+      }
     ]
   },
   {
