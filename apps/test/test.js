@@ -25,6 +25,6 @@
  setInterval(anim,20);
 
   if(P8.isPower()){
-      load();
+      anim();
   }
  })()
