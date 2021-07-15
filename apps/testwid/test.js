@@ -2,11 +2,10 @@
  var imgbat = require("heatshrink").decompress(atob("nlWhH+AH4A/AH4AHwoAQHXQ8pHf47rF6YAXHXQ8OHVo8NHf47/Hf47/Hf47/Hf47/Hf47/Hf47r1I766Y756Z351I766ayTHco6BHfCxBHfI6CdyY7jHQQ73WIayUHcQ6DHew6EHeqxEdyo7gOwo70HQqyVHbyxFHeo6GHeY6Hdyo7cWI47zHQ6yWHbY6IHeKxIABa9MHbI6TQJo7YHUI7YWMKzbQKQYOHdYYPHcK9IWJw7sDKA7hHTA7pWKA7qDKQ7gdwwaTHcyxSHcR2ZHcwZUHcqxUHcLuEHSo7kHSw7gWLI7kHS47iHTA7fdwKxYHcQ6ZHb46bO8A76ADg7/Hf47/Hf47/Hf47/Hf47/Hf47/HbY8uHRg8tHRwA/AH4AsA=="));
 
   var W=240,H=240;
-  E.getBattery = function (){
-    var v = P8.batV();
-    v = v<3.7?3.7:v;
-    return Math.floor((v-3.7)*200);
-  }
+   E.getBattery = function() {
+        var a = P8.batV();
+        return Math.floor(200 * ((3.7 > a ? 3.7 : a) - 3.7))
+    };
   
  function anim() {
    g.clear();
