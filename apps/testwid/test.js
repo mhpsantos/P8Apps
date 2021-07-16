@@ -7,7 +7,7 @@
   };
   
  function anim() {
-  var mx = 120, my = 120, a = 50;
+  var mx = 120, my = 120, a = E.getBattery;
    g.clear();
    /* we don't use any kind of buffering here. Just draw one image
    at a time (image contains a background) too, and there is minimal
