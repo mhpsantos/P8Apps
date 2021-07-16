@@ -1,31 +1,77 @@
-(function(){
- g.clear().flip();
- var imgbat = require("heatshrink").decompress(atob("nlWhH+AH4A/AH4AHwoAQHXQ8pHf47rF6YAXHXQ8OHVo8NHf47/Hf47/Hf47/Hf47/Hf47/Hf47r1I766Y756Z351I766ayTHco6BHfCxBHfI6CdyY7jHQQ73WIayUHcQ6DHew6EHeqxEdyo7gOwo70HQqyVHbyxFHeo6GHeY6Hdyo7cWI47zHQ6yWHbY6IHeKxIABa9MHbI6TQJo7YHUI7YWMKzbQKQYOHdYYPHcK9IWJw7sDKA7hHTA7pWKA7qDKQ7gdwwaTHcyxSHcR2ZHcwZUHcqxUHcLuEHSo7kHSw7gWLI7kHS47iHTA7fdwKxYHcQ6ZHb46bO8A76ADg7/Hf47/Hf47/Hf47/Hf47/Hf47/HbY8uHRg8tHRwA/AH4AsA=="));
- var imgbubble = require("heatshrink").decompress(atob("ikQhH+AAc0AAgKEAAwRFCpgMDnVerwULCIuCCYoUGCQQQBnQ9MA4Q3GChI5DEpATIJYISKCY46LCYwANCa4UObJ7INeCoSOCpAOI"));
+/*
+ * Tape Launcher
+ *
+ */
 
-  var W=240,H=240;
- var bubbles = [];
- for (var i=0;i<10;i++) {
-   bubbles.push({y:Math.random()*H,ly:0,x:(0.5+(i<5?i:i+8))*W/18,v:0.6+Math.random(),s:0.5+Math.random()});
- }
+var s = require("Storage");
+var apps = s.list(/\.info$/).map(app=>{var a=s.readJSON(app,1);return a&&{name:a.name,type:a.type,icon:a.icon,sortorder:a.sortorder,src:a.src};}).filter(app=>app && (app.type=="app" || app.type=="clock" || !app.type));
+apps.sort((a,b)=>{
+  var n=(0|a.sortorder)-(0|b.sortorder);
+  if (n) return n; // do sortorder first
+  if (a.name<b.name) return -1;
+  if (a.name>b.name) return 1;
+  return 0;
+});
 
- function anim() {
-   /* we don't use any kind of buffering here. Just draw one image
-   at a time (image contains a background) too, and there is minimal
-   flicker. */  
-   var mx = 120, my = 120;
-   bubbles.forEach(f=>{
-     f.y-=f.v;if (f.y<-24) f.y=H+8;
-     g.drawImage(imgbubble,f.y,f.x,{scale:f.s});
-   });
-   g.drawImage(imgbat, mx,my,{rotate:Math.sin(getTime()*2)*0.5-Math.PI/2});
-   g.flip();
- }
-  function load(){
-    anim();
+var Napps = apps.length;
+var selected = 1; // assumes we have at least 2 apps
+
+function draw_icon(pos, id, select) {
+  var x = ((pos % 3)*80) + 2; 
+  var y = 80;
+
+  g.setColor(-1);
+  g.drawImage(s.read(apps[id].icon),x+2,y+11,{scale:1.625});
+
+  if (select) {
+    g.setColor(1,1,1).drawRect(x,y,x+79,y+99); // white bounding box
   }
+}
 
-  if(P8.isPower()){
-      load();
+function draw() {
+  g.setColor(0,0,0).fillRect(0,0,239,239);
+
+  if (selected -1 > -1)
+    draw_icon(0, selected -1, false);
+
+  draw_icon(1, selected, true);
+
+  if (selected + 1 < Napps)
+    draw_icon(2, selected + 1, false);
+
+  g.setColor(-1).setFontAlign(0,-1,0).setFont("6x8",3);
+
+  if (apps[selected].name.length <= 12) {
+    g.drawString(apps[selected].name, 120, 40, true);
+  } else {
+    // some app names are too long for one line
+    var name = apps[selected].name;
+    var first = name.substring(0, name.indexOf(" "));
+    var last = name.substring(name.indexOf(" ") + 1, name.length);
+    g.drawString(first, 120, 40, true);
+    g.drawString(last, 120, 200, true);
   }
- })()
+}
+
+TC.on('swipe',(dir)=>{
+ if (dir ==TC.RIGHT) nextapp(1);
+ else if (dir == TC.LEFT) nextapp(-1);
+});
+
+function nextapp(dir){
+  selected += dir;
+
+  if (selected > Napps - 1) {
+    selected = Napps - 1;
+  } else if (selected < 0) {
+    selected = 0;
+  }
+  draw();
+}
+
+function doselect(){
+  load(apps[selected].src);
+}
+
+
+setTimeout(draw(), 500);
