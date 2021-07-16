@@ -571,7 +571,7 @@
       "type":"launch",
       "storage":[
          {
-            "name":"test.js",
+            "name":"launch.js",
             "url":"test.js"
          },
          {
