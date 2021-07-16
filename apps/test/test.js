@@ -54,8 +54,8 @@ function draw() {
 }
 
 TC.on('swipe',(dir)=>{
- if (dir ==TC.RIGHT) nextapp(1);
- else if (dir == TC.LEFT) nextapp(-1);
+ if (dir ==TC.RIGHT) nextapp(-1);
+ else if (dir == TC.LEFT) nextapp(1);
 });
 
 function nextapp(dir){
