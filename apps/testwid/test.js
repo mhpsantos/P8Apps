@@ -21,8 +21,11 @@ function anim() {
   g.flip();
 }
 
-setInterval(anim,20);
+
 
 P8.on('power',function(charging) {
-  if (!charging) load();
+  if (!charging) {
+    load();
+   setInterval(anim,20); 
+  }
 });
