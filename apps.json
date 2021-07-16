@@ -554,7 +554,7 @@
       "version":"0.01",
       "description":"test widget",
       "tags":"widget",
-      "type":"widget",
+      "type":"launch",
       "storage":[
          {
             "name":"test.wid.js",
