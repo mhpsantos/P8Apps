@@ -74,4 +74,4 @@ function doselect(){
 }
 
 
-setTimeout(draw(), 500);
+setTimeout(()=>{draw()},1000);
