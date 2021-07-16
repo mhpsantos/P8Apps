@@ -554,7 +554,7 @@
       "version":"0.01",
       "description":"test widget",
       "tags":"widget",
-      "type":"launch",
+      "type":"widget",
       "storage":[
          {
             "name":"test.wid.js",
@@ -568,9 +568,10 @@
       "icon":"test.png",
       "version":"0.01",
       "description":"Simple Test",
+      "type":"launch",
       "storage":[
          {
-            "name":"test.wid.js",
+            "name":"test.js",
             "url":"test.js"
          },
          {
