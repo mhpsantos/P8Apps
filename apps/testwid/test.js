@@ -24,8 +24,8 @@ function anim() {
 
 
 P8.on('power',function(charging) {
-  if (!charging) {
-    load();
+  if (charging) {
+   g.clear();
    setInterval(anim,20); 
   }
 });
