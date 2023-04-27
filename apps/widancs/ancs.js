@@ -1,10 +1,168 @@
-(function(){function v(a){function c(){l(0);delete b.gatt;delete b.ancs;NRF.getGattforCentralServer||NRF.disconnect();setTimeout(function(){NRF.wake()},500)}var d;b.gatt=a;l(1);b.gatt.device.on("gattserverdisconnected",function(f){d&&clearInterval(d);e&&clearInterval(e);c()});E.on("kill",function(){b.gatt.disconnect().then(function(){NRF.sleep()})});NRF.setSecurity({passkey:"123456",mitm:1,display:1});var e=setTimeout(function(){d&&clearInterval(d);b.gatt.disconnect().then(c)},1E4);b.gatt.startBonding().then(function(){d=
-setInterval(function(){var f=b.gatt.getSecurityStatus();f.connected?f.connected&&f.encrypted&&(clearInterval(d),clearTimeout(e),l(2),z()):(clearInterval(d),clearTimeout(e))},1E3)})["catch"](function(f){Terminal.println("ERROR "+f)})}function z(){b.ancs={primary:null,notify:null,control:null,data:null};b.gatt.getPrimaryService("7905F431-B5CE-4E99-A40F-4B1E122D00D0").then(function(a){b.ancs.primary=a;return a.getCharacteristic("9FBF120D-6301-42D9-8C58-25E699A21DBD")}).then(function(a){b.ancs.notify=
-a;return b.ancs.primary.getCharacteristic("69D1D8F3-45E1-49A8-9821-9BBDFDAAD9D9")}).then(function(a){b.ancs.control=a;return b.ancs.primary.getCharacteristic("22EAC6E9-24D6-4BB5-BE44-B36ACE7C7BFB")}).then(function(a){b.ancs.data=a;l(3);b.ancs.notify.on("characteristicvaluechanged",function(c){var d=c.target.value,e=d.getUint8(0);c=d.getUint8(2);d=d.getUint32(4,!0);1<e||(n&&clearTimeout(n),A.includes(c)&&(e=b.notqueue.length,1==c?(k&&(b.notqueue.push(b.current),k=!1),b.notqueue.push({cat:c,uid:d})):
-16>e&&(b.notqueue[e]={cat:c,uid:d}),n=setTimeout(p,1E3)))});b.ancs.data.on("characteristicvaluechanged",function(c){b.store(c.target.value.buffer);(c=b.gotmsg())&&B(b.buf,c)});b.ancs.notify.startNotifications().then(function(){b.ancs.data.startNotifications().then(function(){l(4)})})})["catch"](function(a){Terminal.println("ERROR "+a)})}function C(a){a=a.split("\n");for(var c=0;c<a.length;c++){a[c]=a[c].trim();var d=a[c];if(18<d.length){for(var e=18;10<e&&!" \t-_".includes(d[e]);)e--;10==e&&(e=18);
-a[c]=d.substr(0,e);a.splice(c+1,0,d.substr(e))}}return a.join("\n")}function w(a){h.unshift(a);3<h.length&&h.pop()}function D(){m=setTimeout(function(){SCREENACCESS.release();m=void 0;k=!1;p()},500)}function B(a,c){function d(F){var x=new Uint8Array(6),q=DataView(x.buffer);q.setUint8(0,2);q.setUint32(1,b.current.uid,!0);q.setUint8(5,F?0:1);b.ancs.control.writeValue(x).then(D)}b.msgTO&&clearTimeout(b.msgTO);for(var e="",f=8;f<8+c.tlen;++f)e+=String.fromCharCode(a[f]);f="";for(var r=11+c.tlen;r<11+
-c.tlen+c.mlen;++r)f+=String.fromCharCode(a[r]);f=C(f);w({ttl:e,msg:f});E.showPrompt();m&&clearTimeout(m);P8.awake||P8.wake();SCREENACCESS.request();P8.buzz();1!=b.current.cat?E.showAlert(f,e).then(d.bind(null,!1)):E.showPrompt(f,{title:e,buttons:{Accept:!0,Cancel:!1}}).then(d)}function p(){if(0!=b.notqueue.length&&!k){k=!0;b.current=b.notqueue.pop();var a=DataView(b.com.buffer);6==b.current.cat?a.setUint8(8,2):a.setUint8(8,3);a.setUint32(1,b.current.uid,!0);b.inp=0;b.ancs.control.writeValue(b.com).then(function(){b.msgTO=
-setTimeout(function(){k=!1;b.msgTO=void 0;p()},1E3)})}}function l(a){t=a;WIDGETS.ancs.draw()}var y=require("Storage").readJSON("widancs.json",1)||{settings:{enabled:!1,category:[1,2,4]}},u=y.settings.enabled,A=y.settings.category,b={gatt:null,ancs:null,current:{cat:0,uid:0},notqueue:[],msgTO:void 0,com:new Uint8Array([0,0,0,0,0,1,20,0,3,100,0]),buf:new Uint8Array(132),inp:0,store:function(a){var c=this.inp;132>=c+a.length&&(this.buf.set(a,c),this.inp+=a.length)},gotmsg:function(){var a=this.inp,c=
-DataView(this.buf.buffer);if(8>a)return null;var d=c.getUint16(6,!0);if(a<d+8)return null;c=c.getUint16(9+d,!0);return a<c+d+11?null:{tlen:d,mlen:c}}};if(!NRF.getGattforCentralServer&&u&&"undefined"!=typeof SCREENACCESS)NRF.on("disconnect",function(a){NRF.sleep()});if(u&&"undefined"!=typeof SCREENACCESS)NRF.on("connect",function(a){NRF.getGattforCentralServer?v(NRF.getGattforCentralServer(a)):NRF.connect(a).then(v)});var m,k=!1,h=[],n,t=5;WIDGETS.ancs={area:"tl",width:24,draw:function(){var a=new Uint16Array([50712,
-63512,1023,65504,2016,0]),c=E.toArrayBuffer(atob("GBgBAAAABAAADgAAHwAAPwAAf4AAP4AAP4AAP4AAHwAAH4AAD8AAB+AAA/AAAfgAAf3gAH/4AD/8AB/+AA/8AAf4AAHwAAAgAAAA"));g.setColor(a[t]);g.drawImage(c,this.x,this.y)}};u&&"undefined"!=typeof SCREENACCESS&&(recent=t=0,NRF.setServices(void 0,{uart:!1}),NRF.sleep(),NRF.wake(),NRF.setAdvertising([2,1,6,17,21,208,0,45,18,30,75,15,164,153,78,206,181,49,244,5,121],{connectable:!0,discoverable:!0,interval:375}),w({ttl:"",msg:"NONE"}),TC.on("swipe",function(a){SCREENACCESS.withApp||
-a!=TC.UP?SCREENACCESS.withApp&&a==TC.DOWN?(SCREENACCESS.request(),recent=0,E.showMessage(h[recent].msg,h[recent].ttl)):SCREENACCESS.withApp||a!=TC.LEFT?SCREENACCESS.withApp||a!=TC.RIGHT||(--recent,0>recent&&(recent=h.lenght-1),E.showMessage(h[recent].msg,h[recent].ttl)):(++recent,recent>=h.lenght&&(recent=0),E.showMessage(h[recent].msg,h[recent].ttl)):(g.clear(),SCREENACCESS.release())}))})();
+/* Test script
+
+E.setConsole("USB", {force:true});
+E.on("ANCS", (nn)=>{console.log("ancs" ,nn);});
+E.on("ANCSMSG", (nn)=>{console.log("msg" ,nn);});
+NRF.setServices({},{ancs:true});
+var rr = NRF.requestANCSMessage;
+var dd = NRF.sendANCSAction;
+
+ancs {
+  "event": "add",
+  "uid": 0, "category": 4, "categoryCnt": 1, "silent": true, "important": false,
+  "pre_existing": true, "positive": false, "negative": true 
+}
+
+msg { "uid": 1,
+  "appid": "com.apple.MobileSMS",
+  "title": "+44 7800 008142",
+  "subtitle": "",
+  "message": "Appt reminder: 18 Oct at 11:50AM with Ms Saira Zafar at The Vineyard Surgery. To cancel the appointment, text back CANCEL. IF YOU ARE COMING INTO THE SURGERY, WE ADVISE YOU WEAR A FACE COVERING AND SANITISE YOUR HANDS UPON ENTRY. https://www.thevineyardsur",
+  "message_size": "256",
+  "date": "20211017T130313",
+  "posaction": "",
+  "negaction": "Clear",
+  "name": ""
+ }
+
+*/
+
+(() => {
+
+  var s = require("Storage").readJSON("widancs.json",1)||{settings:{enabled:false, category:[1,2,4]}};
+  var ENABLED = s.settings.enabled;
+  var CATEGORY = s.settings.category;
+
+  var notifyqueue = [];
+  var current = {cat:0,uid:0};
+  var msgTO = null;
+  
+  function wordwrap(s){
+    var txt = s.split("\n");
+    var MAXCHARS = 18;
+    for (var i = 0; i < txt.length; i++) {
+      txt[i] = txt[i].trim();
+      var l = txt[i];
+      if (l.length > MAXCHARS) {
+        var p = MAXCHARS;
+        while (p > MAXCHARS - 8 && !" \t-_".includes(l[p]))
+          p--;
+        if (p == MAXCHARS - 8) p = MAXCHARS;
+        txt[i] = l.substr(0, p);
+        txt.splice(i + 1, 0, l.substr(p));
+      }
+    }
+    return txt.join("\n");
+  }
+  
+  var screentimeout;
+  var inalert = false;
+  var LAST = [];
+  var recent = 0;
+
+  function saveLast(mm){
+    LAST.unshift(mm);
+    if (LAST.length>3) LAST.pop();
+  }
+  
+  function release_screen(){
+    screentimeout= setTimeout(() => { 
+        SCREENACCESS.release(); 
+        screentimeout = undefined; 
+        inalert=false; 
+        next_notify();
+    }, 500);
+  } 
+
+  function displaymsg(m){
+    if (msgTO) clearTimeout(msgTO); 
+    var message = wordwrap(m.message);
+    saveLast({ttl:m.title,msg:message});
+    //we may already be displaying a prompt, so clear it
+    E.showPrompt();
+    if (screentimeout) clearTimeout(screentimeout);
+    if (!P8.awake) P8.wake();
+    SCREENACCESS.request();
+    P8.buzz();
+    if (current.cat!=1){
+      E.showAlert(message,m.title).then(()=>{
+        NRF.ancsAction(current.uid,0);
+        release_screen();
+      });
+    } else {
+      E.showPrompt(message,{title:m.title,buttons:{"Accept":true,"Cancel":false}}).then((r)=>{
+        NRF.ancsAction(current.uid,r);
+        release_screen();
+      });
+    }
+  }
+
+  var notifyTO;
+  function getnotify(d){
+    if (d.event!="add") return;
+    if (notifyTO) clearTimeout(notifyTO);
+    if(!CATEGORY.includes(d.category)) return; 
+    var len = notifyqueue.length;
+    if (d.category == 1) { // it's a call so pre-empt
+        if (inalert) {notifyqueue.push(current); inalert=false;}
+        notifyqueue.push({cat:d.category, uid:d.uid});
+    } else if (len<32)
+        notifyqueue[len] = {cat:d.category, uid:d.uid};
+    notifyTO = setTimeout(next_notify,1000);
+  }
+
+  function next_notify(){
+    if(notifyqueue.length==0 || inalert) return;
+    inalert=true;
+    current = notifyqueue.pop();
+    NRF.ancsGetNotificationInfo(current.uid).then(
+      (m)=>{displaymsg(m);}
+    ).catch(function(e){
+      inalert = false;
+      next_notify();
+      E.showMessage("ANCS: "+e,"ERROR");
+    });
+}
+
+  var stage = 0    
+  //grey, pink, lightblue, yellow, green
+  function draw(){
+    var colors = new Uint16Array([0xc618,0xf818,0x3ff,0xffe0,0x07e0,0x0000]);
+    var img = E.toArrayBuffer(atob("GBgBAAAABAAADgAAHwAAPwAAf4AAP4AAP4AAP4AAHwAAH4AAD8AAB+AAA/AAAfgAAf3gAH/4AD/8AB/+AA/8AAf4AAHwAAAgAAAA"));
+    g.setColor(colors[stage]);
+    g.drawImage(img,this.x,this.y);
+  }
+    
+  WIDGETS["ancs"] ={area:"tl", width:24,draw:draw};
+  
+  function changed(){
+    stage = NRF.getSecurityStatus().connected ? 4 : 3;
+    WIDGETS["ancs"].draw();
+  }
+  
+  if (ENABLED && typeof SCREENACCESS!='undefined') {
+    E.on("ANCS", getnotify);
+    NRF.on('connect',changed);
+    NRF.on('disconnect',changed);
+    NRF.setServices({},{ancs:true});
+    stage = NRF.getSecurityStatus().connected ? 4 : 3;
+    saveLast(  {ttl:'',msg:'NONE'});
+    TC.on('swipe',(d)=>{
+      if (!SCREENACCESS.withApp && d==TC.UP) {
+        g.clear(); SCREENACCESS.release(); 
+      } else if (SCREENACCESS.withApp && d==TC.DOWN){
+          SCREENACCESS.request(); recent=0;
+          E.showMessage(LAST[recent].msg,LAST[recent].ttl);    
+      } else if (!SCREENACCESS.withApp && d==TC.LEFT){
+         ++recent; 
+         recent = recent>=LAST.length ? 0 : recent;
+         E.showMessage(LAST[recent].msg,LAST[recent].ttl);
+      } else if (!SCREENACCESS.withApp && d==TC.RIGHT){
+          --recent; 
+          recent = recent<0 ? LAST.length-1 : recent;
+          E.showMessage(LAST[recent].msg,LAST[recent].ttl);
+      }
+    });
+  }
+  
+  })();
