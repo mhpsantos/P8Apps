@@ -1,0 +1,14 @@
+/**
+ * Bangle.js Numerals Clock
+ *
+ * + Original Author: Raik M. https://github.com/ps-igel
+ * + Created: April 2020
+ * + see README.md for details
+ */
+
+var numerals={0:[[9,1,82,1,90,9,90,92,82,100,9,100,1,92,1,9],[30,25,61,25,69,33,69,67,61,75,30,75,22,67,22,33]],1:[[50,1,82,1,90,9,90,92,82,100,73,100,65,92,65,27,50,27,42,19,42,9]],2:[[9,1,82,1,90,9,90,53,82,61,21,61,21,74,82,74,90,82,90,92,82,100,9,100,1,92,1,48,9,40,70,40,70,27,9,27,1,19,1,9]],3:[[9,1,82,1,90,9,90,92,82,100,9,100,1,92,1,82,9,74,70,74,70,61,9,61,1,53,1,48,9,40,70,40,70,27,9,27,1,19,1,9]],4:[[9,1,14,1,22,9,22,36,69,36,69,9,77,1,82,1,90,9,90,92,82,100,78,100,70,92,70,61,9,61,1,53,
+1,9]],5:[[9,1,82,1,90,9,90,19,82,27,21,27,21,40,82,40,90,48,90,92,82,100,9,100,1,92,1,82,9,74,71,74,71,61,9,61,1,53,1,9]],6:[[9,1,82,1,90,9,90,19,82,27,22,27,22,40,82,40,90,48,90,92,82,100,9,100,1,92,1,9],[22,60,69,60,69,74,22,74]],7:[[9,1,82,1,90,9,90,15,20,98,9,98,1,90,1,86,56,22,9,22,1,14,1,9]],8:[[9,1,82,1,90,9,90,92,82,100,9,100,1,92,1,9],[22,27,69,27,69,43,22,43],[22,58,69,58,69,74,22,74]],9:[[9,1,82,1,90,9,90,92,82,100,9,100,1,92,1,82,9,74,69,74,69,61,9,61,1,53,1,9],[22,27,69,27,69,41,22,41]]},
+_12hour=(require("Storage").readJSON("setting.json",1)||{})["12hour"]||!1,_hCol=["#ff5555","#ffff00","#FF9901","#2F00FF"],_mCol=["#55ff55","#ffffff","#00EFEF","#FFBF00"],_rCol=0,scale=g.getWidth()/240,interval=0,REFRESH_RATE=1E4,drawFuncs={fill:function(a,b){b&&g.setColor(0,0,0);g.fillPoly(a,!0)},frame:function(a,b){g.drawPoly(a,!0)},thickframe:function(a,b){g.drawPoly(a,!0);g.drawPoly(translate(1,0,a),!0);g.drawPoly(translate(1,1,a),!0);g.drawPoly(translate(0,1,a),!0)}};
+function translate(a,b,c){return g.transformVertices(c,{x:a,y:b,scale:scale})}var settings=require("Storage").readJSON("numerals.json",1);settings||(settings={color:0,drawMode:"fill",showDate:0});function drawNum(a,b,c,e,f,d){g.setColor(b);c=(100*c+25)*scale;e=(104*e+32)*scale;for(d=0;d<numerals[a].length;d++)g.setColor(b),f(translate(c,e,numerals[a][d]),0<d)}
+function draw(a){var b=new Date;a?(setUpdateInt(0),a=("0"+(new Date).getDate()).substr(-2),b=("0"+((new Date).getMonth()+1)).substr(-2),setTimeout(function(){draw();setUpdateInt(1)},5E3)):(a=("0"+(_12hour?b.getHours()%12:b.getHours())).substr(-2),b=("0"+b.getMinutes()).substr(-2));var c=drawFuncs[settings.drawMode];void 0==c&&(c=drawFuncs.fill);g.clearRect(0,24,240,240);drawNum(a[0],_hCol[_rCol],0,0,c);drawNum(a[1],_hCol[_rCol],1,0,c);drawNum(b[0],_mCol[_rCol],0,1,c);drawNum(b[1],_mCol[_rCol],1,1,
+c)P8.loadWidgets();P8.drawWidgets();}function setUpdateInt(a){interval&&clearInterval(interval);a&&(interval=setInterval(draw,REFRESH_RATE))}g.clear(1);0<settings.color&&(_rCol=settings.color-1);setUpdateInt(1);setTimeout(function(){draw()},300);if(settings.showDate)TC.on("touch",function(){return draw(1)});P8.on("sleep",function(a){a?setUpdateInt(0):(0==settings.color&&(_rCol=Math.floor(Math.random()*_hCol.length)),draw(),setUpdateInt(1))});

@@ -1,7 +1,7 @@
 (() => {
 
   function getFace(){
-      
+
   function drawTime(d) {    
       function convert(n){
           var t0 = [" ","one","two","three","four","five","six","seven","eight","nine"];
@@ -39,4 +39,4 @@
 
 return getFace;
 
-})();
+})(); 

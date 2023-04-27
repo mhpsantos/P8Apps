@@ -1,4 +1,3 @@
-
 /* Test script
 
 E.setConsole("USB", {force:true});
